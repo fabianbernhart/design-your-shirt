@@ -1,29 +1,26 @@
 <template>
     <div class="image-color-gallery">
-        <div class="colors">
-            <div
-                v-for="(color, index) in colors"
-                :key="index"
-                :style="{ backgroundColor: color.color }"
-                class="color-box rounded"
-            >
-            
-        
-        
-        
-        </div>
-        </div>
+        <VaButtonGroup
+            class="colors"
+            v-for="(color, index) in colors"
+            :key="index"
+        >
+            <div class="colors">
+                <VaButton
+                    size="large"
+                    :color="color.color"
+                    round
+                    class="mt-16"
+                ></VaButton>
+            </div>
+        </VaButtonGroup>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'ImageColorGallery',
+    name: 'ColorScroller',
     props: {
-        images: {
-            type: Array,
-            default: () => []
-        },
         colors: {
             type: Array,
             default: () => []
@@ -36,9 +33,9 @@ export default {
 .image-color-gallery {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    max-height: 400px; /* Define the maximum height here */
-    overflow-y: auto; /* Add scrollbar when content exceeds max height */
+    align-items: right;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .colors {
@@ -46,5 +43,4 @@ export default {
     flex-direction: column;
     gap: 10px;
 }
-
 </style>

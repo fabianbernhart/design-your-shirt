@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write *.{ts,vue}"
+    "format": "prettier --write **.{ts,vue}"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.1.0",
@@ -20,8 +20,10 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@nuxtjs/vuetify": "^1.12.3",
     "@pinia/nuxt": "^0.4.11",
     "@vuestic/nuxt": "^1.0.20",
+    "axios": "^1.7.2",
     "pinia": "^2.1.6",
     "prettier": "^3.2.5"
   }

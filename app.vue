@@ -1,39 +1,40 @@
 <template>
-    <VaNavbar color="#shadow" class="mb-3">
+    <VaNavbar color="#shadow" class="title">
         <template #left>
-            <VaNavbarItem class="font-bold"> Design your Shirt </VaNavbarItem>
+            <VaNavbarItem text-color="primary">
+                Design your Shirt
+            </VaNavbarItem>
         </template>
         <template #right>
             <VaNavbarItem>
-                <VaButton>Go to Checkout</VaButton>
+                <v-btn>Go to Checkout</v-btn>
             </VaNavbarItem>
         </template>
     </VaNavbar>
+    <div class="">
+        <ColorSelector v-model="selectedColor" :colors="colors" />
+        <ShirtMotive></ShirtMotive>
 
-    <div class="container">
-        <div class="left">
-            <image-color-gallery :colors="colors" />
-        </div>
-        <div class="center">
-            <svg></svg>
-        </div>
-        <div class="right">
-            <image-color-gallery :colors="colors" />
-        </div>
     </div>
+
+    
 </template>
 
 <script lang="ts">
-import ImageColorGallery from './ImageColorGallery.vue'
+import ColorSelector from '@/src/components/ColorSelector.vue'
+import ShirtMotive from '@/src/components/ShirtMotive.vue'
+import {useDesignStore} from "@/src/stores/design"
 
 export default {
     components: {
-        ImageColorGallery
+        ColorSelector,
+        ShirtMotive,
     },
     data() {
         return {
             price: 15.3,
-            colors: []
+            colors: [],
+            selectedColor: {} as any,
         }
     },
     mounted() {
@@ -84,35 +85,30 @@ export default {
 </script>
 
 <style type="text/css">
-.container {
-    display: grid;
-    grid-template-columns: 10vw 80vw 10vw;
-    grid-template-rows: 1fr; /* Adjust height as needed */
-    gap: 0; /* No gap between grid items */
+html,
+body,
+#__nuxt,
+#__layout {
+    height: 100% !important;
+    width: 100% !important;
+    position: relative;
 }
 
-.left,
-.center,
-.right {
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
 }
 
-.left {
-    background-color: #ccc; /* Background color for left */
+.element {
+    position: absolute;
 }
 
-.center {
-    background-color: #f0f0f0; /* Background color for center */
-}
-
-.right {
-    background-color: #ccc; /* Background color for right */
-}
-
-.title {
-    font-size: 24px;
-    color: #7abb03;
-    font-weight: bolder;
+.align-right {
+    justify-content: left;
+    margin-right: auto;
+    align-content: center;
 }
 
 .st0 {
