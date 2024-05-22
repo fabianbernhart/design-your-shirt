@@ -1,9 +1,9 @@
 function validateRequestBody(body: any) {
-    const {address, name} = body
+    const { address, name } = body
 
     const errors: {
-        name?: string[],
-        address?: string[],
+        name?: string[]
+        address?: string[]
     } = {}
 
     if (!address) {
@@ -15,11 +15,15 @@ function validateRequestBody(body: any) {
     }
 
     if (name && name.length >= 15) {
-          errors.name = ['The name must not be longer than 15 characters.'].concat(errors.name ?? [])
+        errors.name = [
+            'The name must not be longer than 15 characters.'
+        ].concat(errors.name ?? [])
     }
 
     if (name && name.includes('_')) {
-        errors.name = ['The name must not contain "_".'].concat(errors.name ?? [])
+        errors.name = ['The name must not contain "_".'].concat(
+            errors.name ?? []
+        )
     }
 
     if (errors.name || errors.address) {
@@ -33,10 +37,10 @@ function validateRequestBody(body: any) {
 
 export default defineEventHandler(async (event) => {
     try {
-        validateRequestBody(await readBody(event));
+        validateRequestBody(await readBody(event))
     } catch (e) {
-       setResponseStatus(event, 422);
-       return e;
+        setResponseStatus(event, 422)
+        return e
     }
 
     return {
