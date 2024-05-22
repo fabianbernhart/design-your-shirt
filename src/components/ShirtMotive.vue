@@ -11,6 +11,9 @@ export default {
             default: "#82be00",
             required: true,
         },
+    },
+    computed: {
+        
     }
 }
 
