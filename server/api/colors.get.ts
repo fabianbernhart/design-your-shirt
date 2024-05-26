@@ -10,7 +10,7 @@ function generateColors(count: number) {
             price: faker.number.float({
                 min: 5,
                 max: 50,
-                precision: 0.01
+                multipleOf: 0.01
             })
         })
     }
