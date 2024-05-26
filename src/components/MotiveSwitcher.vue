@@ -1,19 +1,16 @@
 <template>
-    <div class="color-switcher">
-        <div class="arrow">
+    <div class="switcher">
+        <div class="arrow" v-if="canScrollPrev" @click="prevColors">
             <slot name="up-arrow">
                 <span>&uarr;</span>
             </slot>
         </div>
-        <div
-            v-for="(motive, index) in motives"
-            :key="index"
-            class="color-circle"
-            :class="{ active: index === 0 }"
-        >
-            <slot :name="motive" :color="motive"> </slot>
+        <div class="items-container" @wheel="handleScroll">
+            <div name="items" v-for="(color, index) in visibleColors" :index="index" :key="index">
+                <img class="rounded-rectangle" :src="color.img" height="20rem" width="50rem"
+            </div>
         </div>
-        <div class="arrow">
+        <div class="arrow" v-if="canScrollNext" @click="nextColors">
             <slot name="down-arrow">
                 <span>&darr;</span>
             </slot>
@@ -21,19 +18,116 @@
     </div>
 </template>
 
+
+
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { ref, computed } from 'vue';
+import { useDesignStore } from '../stores/design';
 
-const props = defineProps<{
-    motives: Array<{ id: number; name: string; price: number }>
-}>()
-const emits = defineEmits(['update:selectedMotive'])
+type Motive = {
+    name: string;
+    img: string;
+    price: number;
+};
 
-const selectMotive = (motive: { id: number; name: string; price: number }) => {
-    emits('update:selectedMotive', motive)
-}
+const props = withDefaults(defineProps<{
+    initialIndex?: number;
+    visibleCount?: number;
+}>(), {
+    initialIndex: 0,
+    visibleCount: 5
+});
+
+const designStore = useDesignStore();
+designStore.init();
+
+
+const visibleCount = ref(props.visibleCount);
+const startIndex = ref(0);
+
+const motives = computed(() => designStore.motives.value);
+const visibleColors = computed(() => motives.value.slice(startIndex.value, startIndex.value + visibleCount.value));
+const canScrollPrev = computed(() => startIndex.value > 0);
+const canScrollNext = computed(() => startIndex.value + visibleCount.value < motives.value.length);
+
+
+const setMotive = (color: Motive) => {
+    designStore.motive.value = color;
+};
+const prevColors = () => {
+    startIndex.value = Math.max(startIndex.value - visibleCount.value, 0);
+};
+const nextColors = () => {
+    startIndex.value = Math.min(startIndex.value + visibleCount.value, motives.value.length - visibleCount.value);
+};
+const handleScroll = (event: WheelEvent) => {
+    if (event.deltaY > 0) {
+        nextColors();
+    } else {
+        prevColors();
+    }
+};
+
 </script>
-
 <style scoped>
-/* Add styles for motive switcher here */
+:root {
+    --hover-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.switcher {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: var(--hover-shadow);
+    max-width: 200px;
+}
+
+.arrow {
+    cursor: pointer;
+    margin: 10px 0;
+    color: var(--secondary-color);
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.arrow:hover {
+    color: darken(var(--secondary-color), 10%);
+}
+
+.items-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 300px; /* Adjust based on your needs */
+    overflow: hidden;
+}
+
+.rounded-rectangle {
+    margin: 5px 0;
+    border-radius: 10px; /* Adjust border-radius to control the roundness */
+    border: 2px solid var(--secondary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: bold;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.rounded-rectangle:hover {
+    border-color: var(--primary-color); /* Change border color on hover */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
+}
+
+.color-circle.active {
+    border: 3px solid var(--secondary-color);
+    padding: 5px;
+}
 </style>
+
+

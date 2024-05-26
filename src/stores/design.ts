@@ -5,7 +5,7 @@ import axios from 'axios'
 type Motive = {
     name: string
     price: number
-    description: string
+    img: string
 }
 
 type Color = {
@@ -33,6 +33,17 @@ export const useDesignStore = () => {
         return result
     })
 
+
+    const getColors = computed(async () => {
+        if (!colors.value) {
+            await fetchColors();    
+        }
+        
+        return colors
+    })
+
+
+
     const fetchColors = async () => {
         const response = await axios.get(`/api/colors`)
         colors.value = response.data
@@ -52,9 +63,6 @@ export const useDesignStore = () => {
     const init = async () => {
         await fetchColors()
         await fetchMotives()
-
-        console.debug('colors', colors.value)
-        console.debug('value', motives.value)
     }
 
     return {
@@ -64,9 +72,10 @@ export const useDesignStore = () => {
         motives,
         colors,
         totalPrice,
+        getColors,
         fetchMotives,
         fetchColors,
         designAnotherProduct,
-        init
+        init,
     }
 }

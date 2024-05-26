@@ -25,7 +25,7 @@ import { useDesignStore } from './src/stores/design'
 export default {
     components: {
         DesignerPage
-    },
+    }
 }
 </script>
 

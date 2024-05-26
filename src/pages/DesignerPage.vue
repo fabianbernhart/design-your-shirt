@@ -2,7 +2,8 @@
     <div class="container">
         <div class="controls-container-left">
             <div>
-                <ColorSwitcher :colors="designStore.colors.value"></ColorSwitcher>
+                <ColorSwitcher
+                ></ColorSwitcher>
             </div>
         </div>
         <div class="shirt-container">
@@ -10,7 +11,7 @@
         </div>
         <div class="controls-container-right">
             <div class="controls-content">
-                <ColorSwitcher :colors="colors"></ColorSwitcher>
+                <MotiveSwitcher></MotiveSwitcher>
             </div>
         </div>
     </div>
@@ -19,14 +20,8 @@
 <script setup>
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import ColorSwitcher from '@/src/components/ColorSwitcher.vue'
+import MotiveSwitcher from '@/src/components/MotiveSwitcher.vue';
 import { useDesignStore } from '../stores/design'
-
-const designStore = useDesignStore()
-
-
-
-
-
 </script>
 
 <style scoped>
@@ -52,6 +47,8 @@ const designStore = useDesignStore()
 
 .shirt-container {
     position: relative;
+    margin-left: 20rem;
+    margin-right: 20rem;
 }
 
 .shirt-container {

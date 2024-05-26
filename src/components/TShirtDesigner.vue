@@ -169,17 +169,18 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import { computed } from 'vue'
 import { useDesignStore } from '../stores/design'
-
-defineProps<{
-    color: string
-}>()
 
 const designStore = useDesignStore()
 
-const dynamicColor = ref('#ff5733')
-
 const properties = ['--st0-color', '--st1-color', '--st2-color']
+
+const selectedColor = computed(() => {
+    const color = designStore.color.value
+    return color ? color.color : '' // Return color if not null, otherwise empty string
+})
 
 const changeColors = (color: string) => {
     for (const property of properties) {
@@ -188,23 +189,26 @@ const changeColors = (color: string) => {
 }
 
 onMounted(() => {
-    console.debug('Cute Mount', 'Nuts')
+    console.debug('mount')
+    if (typeof document !== 'undefined') {
+        changeColors(selectedColor.value)
 
-    changeColors(dynamicColor.value)
+        console.debug('mount Change Colors')
+    }
 })
 </script>
 
 <style scoped>
 .st0 {
-    fill: var(--st0-color, #0b3c64);
+    fill: var(--st0-color, #222222);
 }
 
 .st1 {
-    fill: var(--st1-color, #2710a5);
+    fill: var(--st1-color, #363434);
 }
 
 .st2 {
-    fill: var(--st2-color, #3416bd);
+    fill: var(--st2-color, #1e1d1f);
 }
 
 .st3 {
