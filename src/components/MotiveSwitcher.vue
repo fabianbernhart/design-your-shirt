@@ -6,8 +6,19 @@
             </slot>
         </div>
         <div class="items-container" @wheel="handleScroll">
-            <div name="items" v-for="(color, index) in visibleColors" :index="index" :key="index">
-                <img class="rounded-rectangle" :src="color.img" height="20rem" width="50rem"
+            <div
+                name="items"
+                @click="setMotive(color)"
+                v-for="(color, index) in visibleColors"
+                :index="index"
+                :key="index"
+            >
+                <img
+                    class="rounded-rectangle"
+                    :src="color.img"
+                    height="20rem"
+                    width="50rem"
+                />
             </div>
         </div>
         <div class="arrow" v-if="canScrollNext" @click="nextColors">
@@ -15,59 +26,68 @@
                 <span>&darr;</span>
             </slot>
         </div>
+        <div>
+            {{ designStore.motive.value?.img }}
+        </div>
     </div>
 </template>
 
-
-
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useDesignStore } from '../stores/design';
+import { ref, computed } from 'vue'
+import { useDesignStore } from '@/src/stores/design'
 
 type Motive = {
-    name: string;
-    img: string;
-    price: number;
-};
+    name: string
+    img: string
+    price: number
+}
 
-const props = withDefaults(defineProps<{
-    initialIndex?: number;
-    visibleCount?: number;
-}>(), {
-    initialIndex: 0,
-    visibleCount: 5
-});
+const props = withDefaults(
+    defineProps<{
+        initialIndex?: number
+        visibleCount?: number
+    }>(),
+    {
+        initialIndex: 0,
+        visibleCount: 5
+    }
+)
 
-const designStore = useDesignStore();
-designStore.init();
+const designStore = useDesignStore()
+designStore.fetchMotives()
 
+const visibleCount = ref(props.visibleCount)
+const startIndex = ref(0)
 
-const visibleCount = ref(props.visibleCount);
-const startIndex = ref(0);
-
-const motives = computed(() => designStore.motives.value);
-const visibleColors = computed(() => motives.value.slice(startIndex.value, startIndex.value + visibleCount.value));
-const canScrollPrev = computed(() => startIndex.value > 0);
-const canScrollNext = computed(() => startIndex.value + visibleCount.value < motives.value.length);
-
+const motives = computed(() => designStore.motives.value)
+const visibleColors = computed(() =>
+    motives.value.slice(startIndex.value, startIndex.value + visibleCount.value)
+)
+const canScrollPrev = computed(() => startIndex.value > 0)
+const canScrollNext = computed(
+    () => startIndex.value + visibleCount.value < motives.value.length
+)
 
 const setMotive = (color: Motive) => {
-    designStore.motive.value = color;
-};
+    console.debug('dwadawdawd', color)
+    designStore.motive.value = color
+}
 const prevColors = () => {
-    startIndex.value = Math.max(startIndex.value - visibleCount.value, 0);
-};
+    startIndex.value = Math.max(startIndex.value - visibleCount.value, 0)
+}
 const nextColors = () => {
-    startIndex.value = Math.min(startIndex.value + visibleCount.value, motives.value.length - visibleCount.value);
-};
+    startIndex.value = Math.min(
+        startIndex.value + visibleCount.value,
+        motives.value.length - visibleCount.value
+    )
+}
 const handleScroll = (event: WheelEvent) => {
     if (event.deltaY > 0) {
-        nextColors();
+        nextColors()
     } else {
-        prevColors();
+        prevColors()
     }
-};
-
+}
 </script>
 <style scoped>
 :root {
@@ -116,7 +136,10 @@ const handleScroll = (event: WheelEvent) => {
     color: var(--text-color);
     font-size: 14px;
     font-weight: bold;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    transition:
+        transform 0.3s,
+        border-color 0.3s,
+        box-shadow 0.3s;
 }
 
 .rounded-rectangle:hover {
@@ -129,5 +152,3 @@ const handleScroll = (event: WheelEvent) => {
     padding: 5px;
 }
 </style>
-
-

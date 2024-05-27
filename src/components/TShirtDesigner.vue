@@ -1,4 +1,6 @@
 <template class="svg-template">
+    {{ designStore.motive.value?.img }}
+
     <svg
         version="1.1"
         id="Ebene_1"
@@ -6,8 +8,8 @@
         xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 520 580"
         class="shirt-designer"
-        width="20rem"
-        height="20rem"
+        width="300px"
+        height="300px"
     >
         <path
             class="st0"
@@ -165,37 +167,21 @@
             class="st3"
             d="M198.5,27.3c0,0,15.9,16.2,58.7,16.2s61-13.6,61-13.6"
         />
+        <image
+            class="rounded-rectangle"
+            x="210"
+            y="120"
+            width="100"
+            height="100"
+            :href="designStore.getMotiveImage"
+        />
     </svg>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { computed } from 'vue'
-import { useDesignStore } from '../stores/design'
+import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
-
-const properties = ['--st0-color', '--st1-color', '--st2-color']
-
-const selectedColor = computed(() => {
-    const color = designStore.color.value
-    return color ? color.color : '' // Return color if not null, otherwise empty string
-})
-
-const changeColors = (color: string) => {
-    for (const property of properties) {
-        document.documentElement.style.setProperty(property, color)
-    }
-}
-
-onMounted(() => {
-    console.debug('mount')
-    if (typeof document !== 'undefined') {
-        changeColors(selectedColor.value)
-
-        console.debug('mount Change Colors')
-    }
-})
 </script>
 
 <style scoped>

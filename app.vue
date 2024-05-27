@@ -14,20 +14,12 @@
     </VaNavbar>
     <!-- Container -->
     <div class="full-width-container">
-        <DesignerPage style="width: 100vw" />
+        <NuxtPage style="width: 100vw" />
+        <!-- <DesignerPage style="width: 100vw" /> -->
     </div>
 </template>
 
-<script lang="ts">
-import DesignerPage from './src/pages/DesignerPage.vue'
-import { useDesignStore } from './src/stores/design'
-
-export default {
-    components: {
-        DesignerPage
-    }
-}
-</script>
+<script lang="ts"></script>
 
 <style type="text/css">
 body {
@@ -35,6 +27,22 @@ body {
 }
 
 .full-width-container {
-    width: 100vw; /* Set the width to 100% of the viewport width */
+  width: 100vw; /* Set the width to 100% of the viewport width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding: 0; /* Ensure no padding is added */
+  margin: 0; /* Ensure no margin is added */
+}
+
+#app {
+  width: 100%; /* Ensure app container takes full width */
+  height: 100%; /* Ensure app container takes full height */
+  display: flex;
+  flex-direction: column;
+}
+
+.nuxt-page {
+  width: 100vw; /* Ensure NuxtPage takes full width */
+  height: 100%; /* Optionally set the height */
+  flex-grow: 1; /* Allow NuxtPage to grow and fill the available space */
 }
 </style>

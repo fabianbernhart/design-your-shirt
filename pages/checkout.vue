@@ -1,27 +1,11 @@
-<template class="full-width-container">
-    <div class="container">
-        <div class="controls-container-left">
-            <div class="controls-content">
-                <ColorSwitcher :colors="colors"></ColorSwitcher>
-            </div>
-        </div>
-        <div class="shirt-container">
-            <TShirtDesigner></TShirtDesigner>
-        </div>
-        <div class="controls-container-right">
-            <div class="controls-content">
-                <ColorSwitcher :colors="colors"></ColorSwitcher>
-            </div>
-        </div>
-    </div>
-</template>
+<template class="full-width-container"></template>
 
 <script>
 import { ref } from 'vue'
 import axios from 'axios'
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import ColorSwitcher from '@/src/components/ColorSwitcher.vue'
-import { useDesignStore } from '../stores/design'
+import { useDesignStore } from '@/src/stores/design'
 
 export default {
     components: {
@@ -31,7 +15,7 @@ export default {
     setup() {
         const designStore = useDesignStore()
 
-        const colors = ref(designStore.colors)
+        const colors = ref(['#c8f876', '#d12535'])
 
         const handleSubmit = async () => {
             try {
@@ -43,6 +27,7 @@ export default {
                 designStore.orderSuccess = true
             } catch (error) {
                 console.error(error)
+                $emit('error', 'Failed to submit order.')
             }
         }
 

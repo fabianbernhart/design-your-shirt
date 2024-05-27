@@ -2,21 +2,23 @@
 import { ref, computed } from 'vue'
 import axios from 'axios'
 
-type Motive = {
+export type Motive = {
     name: string
     price: number
     img: string
 }
 
-type Color = {
+export type Color = {
     name: string
     color: string
     price: number
 }
 
-const ENV_BASE_URL: string = 'localhost:3023'
+const host = "http://localhost:3023"
 
 export const useDesignStore = () => {
+    const properties = ['--st0-color', '--st1-color', '--st2-color']
+
     const motive = ref<Motive | null>(null)
     const color = ref<Color | null>(null)
     const orderSuccess = ref<boolean>(false)
@@ -33,24 +35,30 @@ export const useDesignStore = () => {
         return result
     })
 
+    const changeColors = () => {
+        if (!color.value) return
 
-    const getColors = computed(async () => {
-        if (!colors.value) {
-            await fetchColors();    
+        for (const property of properties) {
+            document.documentElement.style.setProperty(
+                property,
+                color.value.color
+            )
         }
-        
-        return colors
-    })
+    }
 
+    const getMotiveImage = (newMotive: Motive) => {
+        motive.value = newMotive
 
+        return motive.value.img
+    }
 
     const fetchColors = async () => {
-        const response = await axios.get(`/api/colors`)
+        const response = await axios.get(`${host}/api/colors`)
         colors.value = response.data
     }
 
     const fetchMotives = async () => {
-        const response = await axios.get(`/api/motives`)
+        const response = await axios.get(`${host}/api/motives`)
         motives.value = response.data
     }
 
@@ -72,10 +80,11 @@ export const useDesignStore = () => {
         motives,
         colors,
         totalPrice,
-        getColors,
+        changeColors,
+        getMotiveImage,
         fetchMotives,
         fetchColors,
         designAnotherProduct,
-        init,
+        init
     }
 }
