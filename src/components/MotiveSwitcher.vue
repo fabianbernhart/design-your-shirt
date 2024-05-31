@@ -12,9 +12,11 @@
                 v-for="(color, index) in visibleColors"
                 :index="index"
                 :key="index"
+                
             >
                 <img
                     class="rounded-rectangle"
+                    :style="getItemClass(color)"
                     :src="color.img"
                     height="20rem"
                     width="50rem"
@@ -25,9 +27,6 @@
             <slot name="down-arrow">
                 <span>&darr;</span>
             </slot>
-        </div>
-        <div>
-            {{ designStore.motive.value?.img }}
         </div>
     </div>
 </template>
@@ -53,6 +52,13 @@ const props = withDefaults(
     }
 )
 
+const getItemClass = ((motive: Motive): {border: string} | string => {
+    if (designStore.motive.value == motive ) {
+        return ({ border: "5px solid #000"})
+    }
+    return ""
+})
+
 const designStore = useDesignStore()
 designStore.fetchMotives()
 
@@ -68,9 +74,11 @@ const canScrollNext = computed(
     () => startIndex.value + visibleCount.value < motives.value.length
 )
 
-const setMotive = (color: Motive) => {
-    console.debug('dwadawdawd', color)
-    designStore.motive.value = color
+const setMotive = (motive: Motive) => {
+    console.debug("SET MOTIVE", motive.img)
+
+    designStore.motive.value = motive
+    designStore.changeImg()
 }
 const prevColors = () => {
     startIndex.value = Math.max(startIndex.value - visibleCount.value, 0)
@@ -121,11 +129,12 @@ const handleScroll = (event: WheelEvent) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 300px; /* Adjust based on your needs */
     overflow: hidden;
 }
 
 .rounded-rectangle {
+    width: 100px;
+    height: 100px;
     margin: 5px 0;
     border-radius: 10px; /* Adjust border-radius to control the roundness */
     border: 2px solid var(--secondary-color);

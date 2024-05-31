@@ -15,7 +15,7 @@
             >
                 <div
                     class="color-circle"
-                    :style="{ backgroundColor: color.color }"
+                    :style="[getItemClass(color), { backgroundColor: color.color,}]"
                     @click="setColor(color)"
                 ></div>
             </slot>
@@ -57,7 +57,7 @@ designStore.fetchColors()
 const visibleCount = ref(props.visibleCount)
 const startIndex = ref(0)
 
-const colors = computed(() => designStore.colors.value)
+const colors = computed<Color[]>(() => designStore.colors.value)
 const visibleColors = computed(() =>
     colors.value.slice(startIndex.value, startIndex.value + visibleCount.value)
 )
@@ -87,6 +87,16 @@ const handleScroll = (event: WheelEvent) => {
         prevColors()
     }
 }
+
+const getItemClass = ((color: Color): {border: string} | {} => {
+
+
+    if (designStore.color.value == color ) {
+        return { border: "4px solid #000"}
+    }
+    return {}
+})
+
 </script>
 
 <style scoped>
@@ -115,14 +125,13 @@ const handleScroll = (event: WheelEvent) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 300px; /* Adjust based on your needs */
     overflow: hidden;
 }
 
 .color-circle {
     margin: 5px 0;
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     border: 2px solid var(--secondary-color);
     cursor: pointer;
@@ -138,12 +147,14 @@ const handleScroll = (event: WheelEvent) => {
 }
 
 .color-circle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-color); /* Change border color on hover */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
 }
 
 .color-circle.active {
     border: 3px solid var(--secondary-color);
     padding: 5px;
 }
+
+
 </style>

@@ -14,19 +14,21 @@ export type Color = {
     price: number
 }
 
-const host = "http://localhost:3023"
+const host = 'http://localhost:3023'
 
 export const useDesignStore = () => {
     const properties = ['--st0-color', '--st1-color', '--st2-color']
 
     const motive = ref<Motive | null>(null)
+
+
     const color = ref<Color | null>(null)
     const orderSuccess = ref<boolean>(false)
 
     const motives = ref<Motive[]>([])
     const colors = ref<Color[]>([])
 
-    const totalPrice = computed<number>((): number => {
+    const totalPrice = computed(() => {
         const motivePrice: number = motive.value ? motive.value.price : 0
         const colorPrice: number = color.value ? color.value.price : 0
 
@@ -46,11 +48,15 @@ export const useDesignStore = () => {
         }
     }
 
-    const getMotiveImage = (newMotive: Motive) => {
-        motive.value = newMotive
+    const changeImg = () => {
+        if (!motive.value) return
+        const imageElement = document.getElementById('optionalImg')
 
-        return motive.value.img
+        if (!imageElement) return
+        
+        imageElement.setAttribute("href", motive.value.img )
     }
+
 
     const fetchColors = async () => {
         const response = await axios.get(`${host}/api/colors`)
@@ -81,10 +87,10 @@ export const useDesignStore = () => {
         colors,
         totalPrice,
         changeColors,
-        getMotiveImage,
+        changeImg,
         fetchMotives,
         fetchColors,
         designAnotherProduct,
-        init
+        init,
     }
 }

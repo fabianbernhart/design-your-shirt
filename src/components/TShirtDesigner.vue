@@ -8,8 +8,8 @@
         xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 520 580"
         class="shirt-designer"
-        width="300px"
-        height="300px"
+        width="600px"
+        height="600px"
     >
         <path
             class="st0"
@@ -167,13 +167,14 @@
             class="st3"
             d="M198.5,27.3c0,0,15.9,16.2,58.7,16.2s61-13.6,61-13.6"
         />
+
         <image
+            id="optionalImg"
             class="rounded-rectangle"
             x="210"
             y="120"
             width="100"
             height="100"
-            :href="designStore.getMotiveImage"
         />
     </svg>
 </template>
@@ -182,6 +183,7 @@
 import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
+
 </script>
 
 <style scoped>
