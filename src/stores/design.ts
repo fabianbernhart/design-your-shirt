@@ -69,12 +69,10 @@ export const useDesignStore = () => {
         motives.value = response.data
     }
 
-    const createOrder = async (data: { name: string, address: string}) => {
+    const createOrder = async (data: { name: string; address: string }) => {
         const response = await axios.post(`${host}/api/order`, data)
 
-
         console.debug(response)
-
     }
 
     watch(
@@ -96,17 +94,16 @@ export const useDesignStore = () => {
     )
 
     const totalPrice = computed((): number => {
-        const result = motivePrice.value + colorPrice.value;
+        const result = motivePrice.value + colorPrice.value
 
-        const fixedResult = result.toFixed(2);
-
+        const fixedResult = result.toFixed(2)
 
         return parseFloat(fixedResult)
     })
 
     const $reset = () => {
-        color.value = null;
-        motive.value = null;
+        color.value = null
+        motive.value = null
         motives.value = []
         colors.value = []
 
@@ -115,11 +112,9 @@ export const useDesignStore = () => {
 
         personalData.value = {
             name: '',
-            address: '',
+            address: ''
         }
-        
     }
-
 
     return {
         motivePrice,
@@ -135,14 +130,10 @@ export const useDesignStore = () => {
         fetchMotives: getMotives,
         fetchColors: getColors,
         createOrder,
-        $reset,
+        $reset
     }
 }
 
 const designStore = useDesignStore()
-
-
-
-
 
 export { designStore }

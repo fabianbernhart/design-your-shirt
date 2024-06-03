@@ -4,7 +4,7 @@ export type TitleObjectType = {
     title: null | string
     action: null | string
     to: null | string
-    showTotal?: boolean,
+    showTotal?: boolean
 }
 
 export const useTitleStore = () => {
@@ -14,7 +14,7 @@ export const useTitleStore = () => {
         title: 'null',
         action: 'null',
         to: 'null',
-        showTotal: false,
+        showTotal: false
     })
 
     const getTitle = computed<TitleObjectType>(() => titleObject.value)
@@ -31,7 +31,7 @@ export const useTitleStore = () => {
                     title: 'Design your shirt',
                     action: 'Go to Checkout',
                     to: '/checkout',
-                    showTotal: true,
+                    showTotal: true
                 })
             } else if (newPath === '/checkout') {
                 setTitle({

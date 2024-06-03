@@ -1,46 +1,40 @@
 <template>
     <div class="order-success-page">
-      <div class="content">
-        <h1> Thank you {{personalData.name }} for your order!</h1>
-        <VaButton @click="navigateToDesignPage">
-            Design Another Product</VaButton
-        >
-      </div>
+        <div class="content">
+            <h1>Thank you {{ personalData.name }} for your order!</h1>
+            <VaButton @click="navigateToDesignPage">
+                Design Another Product</VaButton
+            >
+        </div>
     </div>
-  </template>
-  
-  <script setup>
+</template>
 
+<script setup>
 import { designStore } from '@/src/stores/design'
 
+const { personalData } = designStore
 
-const { personalData } = designStore;
-
-  
-  // Function to navigate to the design page
-  const navigateToDesignPage = () => {
-    
-    navigateTo('/designer');
+// Function to navigate to the design page
+const navigateToDesignPage = () => {
+    navigateTo('/designer')
     designStore.$reset()
-  };
-  </script>
-  
-  <style scoped>
+}
+</script>
 
-  h1 {
+<style scoped>
+h1 {
     font-size: xx-large;
-  }
+}
 
-  .order-success-page {
+.order-success-page {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     margin-top: 10rem;
-  }
-  
-  .content {
+}
+
+.content {
     text-align: center;
-  }
-  </style>
-  
+}
+</style>

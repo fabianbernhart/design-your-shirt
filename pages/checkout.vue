@@ -52,7 +52,6 @@
                         label="Address"
                     />
                 </VaForm>
-                
             </div>
         </div>
 
@@ -68,36 +67,26 @@ import { designStore } from '@/src/stores/design'
 import { validation } from '@/src/stores/validation'
 import { useForm } from 'vuestic-ui'
 
-const {personalData, color ,fetchColors, createOrder } = designStore;
+const { personalData, color, fetchColors, createOrder } = designStore
 
 if (!color.value) {
     fetchColors()
 }
 
-const { maxLengthRules, notIncludes, requiredRules} = validation
-const { isValid } = useForm('formRef');
-
+const { maxLengthRules, notIncludes, requiredRules } = validation
+const { isValid } = useForm('formRef')
 
 const nameRules = [
-    requiredRules("Name"),
-    maxLengthRules(14, "Name"),
-    notIncludes("_", "Name")
-];
+    requiredRules('Name'),
+    maxLengthRules(14, 'Name'),
+    notIncludes('_', 'Name')
+]
 
-const addressRules = [
-    requiredRules("Address"),
-
-];
-
-
-
+const addressRules = [requiredRules('Address')]
 const buy = () => {
-    createOrder(designStore.personalData.value);
-    navigateTo("/order-success")
-
-
+    createOrder(designStore.personalData.value)
+    navigateTo('/order-success')
 }
-
 watch(
     () => designStore.motive.value?.img,
     (newImgUrl) => {
