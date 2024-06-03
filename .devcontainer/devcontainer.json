@@ -1,23 +1,6 @@
 {
-    "name": "Nuxt.js Development Container",
-    "dockerFile": "Dockerfile",
-    "context": "..",
-    "workspaceFolder": "/workspace",
-
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
-                "octref.vetur"
-            ],
-            "settings": {
-                "terminal.integrated.shell.linux": "/bin/bash"
-            }
-        }
-    },
-    "forwardPorts": [
-      3000
-    ]
+    "name": "Node.js Development",
+    "dockerFile": "./Dockerfile",
+    "appPort": [3023]
   }
   

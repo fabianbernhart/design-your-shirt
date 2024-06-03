@@ -1,20 +1,20 @@
-# Use the official Node.js image as the base image
-FROM node:18
+# Use an official Node.js LTS image
+FROM node:lts
 
-# Set the working directory
-WORKDIR /workspace
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy the package.json and package-lock.json (if available)
+# Copy package.json and package-lock.json if available
 COPY package*.json ./
 
-# Install project dependencies
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the code
 COPY . .
 
-# Expose the port on which the app runs
+# Expose the port your app runs on
 EXPOSE 3000
 
-# Start the application
+# Start the app
 CMD ["npm", "run", "dev"]
