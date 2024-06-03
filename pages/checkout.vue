@@ -40,30 +40,23 @@
                 <VaForm ref="formRef">
                     <VaInput
                         class="personal-data-input"
-                        v-model="form.name"
-                        :rules="[
-                            (value) =>
-                                (value && value.length > 0) ||
-                                'Name is required'
-                        ]"
+                        v-model="personalData.name"
+                        :rules="nameRules"
                         label="Name"
                         :autofocus="true"
                     />
                     <VaInput
                         class="personal-data-input"
-                        v-model="form.address"
-                        :rules="[
-                            (value) =>
-                                (value && value.length > 0) ||
-                                'Address is required'
-                        ]"
+                        v-model="personalData.address"
+                        :rules="addressRules"
                         label="Address"
                     />
                 </VaForm>
+                
             </div>
         </div>
 
-        <VaButton color="success" :disabled="!isValid">
+        <VaButton @click="buy()" color="success" :disabled="!isValid">
             Buy ({{ designStore.totalPrice }} €)</VaButton
         >
     </div>
@@ -72,20 +65,38 @@
 <script setup lang="ts">
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import { designStore } from '@/src/stores/design'
+import { validation } from '@/src/stores/validation'
 import { useForm } from 'vuestic-ui'
 
-if (!designStore.color.value) {
-    designStore.fetchColors()
+const {personalData, color ,fetchColors, createOrder } = designStore;
+
+if (!color.value) {
+    fetchColors()
 }
 
-const { isValid } = useForm('formRef')
+const { maxLengthRules, notIncludes, requiredRules} = validation
+const { isValid } = useForm('formRef');
 
-const form = ref({
-    name: '',
-    address: ''
-})
 
-const buy = () => {}
+const nameRules = [
+    requiredRules("Name"),
+    maxLengthRules(14, "Name"),
+    notIncludes("_", "Name")
+];
+
+const addressRules = [
+    requiredRules("Address"),
+
+];
+
+
+
+const buy = () => {
+    createOrder(designStore.personalData.value);
+    navigateTo("/order-success")
+
+
+}
 
 watch(
     () => designStore.motive.value?.img,

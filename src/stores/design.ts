@@ -1,6 +1,9 @@
 // stores/design.js
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { da } from '@faker-js/faker'
+import { createPinia, setActivePinia } from 'pinia'
+import type { RefSymbol } from '@vue/reactivity'
 
 export type Motive = {
     name: string
@@ -22,10 +25,14 @@ export const useDesignStore = () => {
     const motive = ref<Motive | null>(null)
     const motives = ref<Motive[]>([])
     const colors = ref<Color[]>([])
-    const orderSuccess = ref<boolean>(false) // not used
 
     const motivePrice = ref<number>(0)
     const colorPrice = ref<number>(0)
+
+    const personalData = ref({
+        name: '',
+        address: ''
+    })
 
     const updateColor = () => {
         if (!color.value) return
@@ -62,9 +69,12 @@ export const useDesignStore = () => {
         motives.value = response.data
     }
 
-    const createOrder = async (data: unknown[]) => {
-        const response = await axios.get(`${host}/api/order`)
-        motives.value = response.data
+    const createOrder = async (data: { name: string, address: string}) => {
+        const response = await axios.post(`${host}/api/order`, data)
+
+
+        console.debug(response)
+
     }
 
     watch(
@@ -85,28 +95,54 @@ export const useDesignStore = () => {
         { immediate: true }
     )
 
-    const totalPrice = computed((): string => {
-        const result = motivePrice.value + colorPrice.value
+    const totalPrice = computed((): number => {
+        const result = motivePrice.value + colorPrice.value;
 
-        return result.toFixed(2)
+        const fixedResult = result.toFixed(2);
+
+
+        return parseFloat(fixedResult)
     })
+
+    const $reset = () => {
+        color.value = null;
+        motive.value = null;
+        motives.value = []
+        colors.value = []
+
+        motivePrice.value = 0
+        colorPrice.value = 0
+
+        personalData.value = {
+            name: '',
+            address: '',
+        }
+        
+    }
+
 
     return {
         motivePrice,
         colorPrice,
         motive,
         color,
-        orderSuccess,
+        personalData,
         motives,
         colors,
         totalPrice,
         updateColor,
         changeImg,
         fetchMotives: getMotives,
-        fetchColors: getColors
+        fetchColors: getColors,
+        createOrder,
+        $reset,
     }
 }
 
 const designStore = useDesignStore()
+
+
+
+
 
 export { designStore }

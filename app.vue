@@ -10,7 +10,7 @@
         </template>
         <template #right>
             <VaNavbarItem textColor="primary">
-                <span style="font-size: 2rem; margin-right: 2rem; color: #000"
+                <span v-if="title.showTotal"style="font-size: 2rem; margin-right: 2rem; color: #000"
                     >{{ designStore.totalPrice }} €</span
                 >
                 <span> </span>
