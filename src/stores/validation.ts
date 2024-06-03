@@ -1,7 +1,7 @@
 export const useValidationStore = () => {
     const requiredRules = (key: string = 'Field') => {
         return (value: string) =>
-            (value && value.length > 0) || `Field is required`
+            (value && value.length > 0) || `${key} is required`
     }
 
     const maxLengthRules = (length: number, key: string = 'Field') => {
@@ -10,7 +10,7 @@ export const useValidationStore = () => {
             `${key} must be ${length} characters or less`
     }
 
-    const notIncludes = (pattern: string, key: string = 'Field') => {
+    const notIncludes = (pattern: string, key = 'Field') => {
         return (value: string) =>
             (value && !value.includes(pattern)) ||
             `The ${key} must not contain ${pattern}`

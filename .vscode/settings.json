@@ -1,3 +1,9 @@
 {
-    "explorer.copyRelativePathSeparator": "/"
+    "explorer.copyRelativePathSeparator": "/",
+    "cSpell.words": [
+        "Nuxt",
+        "nuxtjs",
+        "tailwindcss",
+        "vuetify"
+    ]
 }
