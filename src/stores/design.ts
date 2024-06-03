@@ -37,6 +37,8 @@ export const useDesignStore = () => {
     const updateColor = () => {
         if (!color.value) return
 
+        if (!document) return
+
         for (const property of properties) {
             document.documentElement.style.setProperty(
                 property,
@@ -45,7 +47,7 @@ export const useDesignStore = () => {
         }
     }
 
-    const changeImg = () => {
+    const updateMotive = () => {
         if (!motive.value) return
         const imageElements = document.getElementsByClassName('optionalImg')
 
@@ -67,6 +69,12 @@ export const useDesignStore = () => {
     const getMotives = async () => {
         const response = await axios.get(`${host}/api/motives`)
         motives.value = response.data
+
+
+        if (!motive.value) {
+            motive.value = motives.value[0]
+            updateMotive()
+        }
     }
 
     const createOrder = async (data: { name: string; address: string }) => {
@@ -98,7 +106,7 @@ export const useDesignStore = () => {
 
         const fixedResult = result.toFixed(2)
 
-        return parseFloat(fixedResult)
+        return Number.parseFloat(fixedResult)
     })
 
     const $reset = () => {
@@ -126,9 +134,9 @@ export const useDesignStore = () => {
         colors,
         totalPrice,
         updateColor,
-        changeImg,
-        fetchMotives: getMotives,
-        fetchColors: getColors,
+        changeImg: updateMotive,
+        getMotives,
+        getColors,
         createOrder,
         $reset
     }

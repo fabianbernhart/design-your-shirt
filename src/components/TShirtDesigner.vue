@@ -171,7 +171,6 @@
 </template>
 
 <script setup lang="ts">
-import { designStore } from '@/src/stores/design'
 </script>
 
 <style scoped>

@@ -46,7 +46,6 @@ export const useTitleStore = () => {
                     to: '/checkout'
                 })
             }
-            designStore.changeImg()
         },
         { immediate: true }
     )

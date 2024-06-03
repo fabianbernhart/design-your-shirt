@@ -67,10 +67,10 @@ import { designStore } from '@/src/stores/design'
 import { validation } from '@/src/stores/validation'
 import { useForm } from 'vuestic-ui'
 
-const { personalData, color, fetchColors, createOrder } = designStore
+const { personalData, color, createOrder, motive } = designStore
 
-if (!color.value) {
-    fetchColors()
+if (!color.value || !motive.value) {
+    navigateTo("/designer")
 }
 
 const { maxLengthRules, notIncludes, requiredRules } = validation
@@ -87,13 +87,6 @@ const buy = () => {
     createOrder(designStore.personalData.value)
     navigateTo('/order-success')
 }
-watch(
-    () => designStore.motive.value?.img,
-    (newImgUrl) => {
-        designStore.changeImg()
-    },
-    { immediate: true }
-)
 </script>
 
 <style scoped>

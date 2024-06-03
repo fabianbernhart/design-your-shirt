@@ -30,6 +30,7 @@
     "@pinia/nuxt": "^0.4.11",
     "@vuestic/nuxt": "^1.0.20",
     "axios": "^1.7.2",
+    "hammerjs": "^2.0.8",
     "pinia": "^2.1.6",
     "prettier": "^3.2.5"
   }

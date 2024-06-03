@@ -1,28 +1,5 @@
 <template>
-    <!-- Navigation -->
-    <VaNavbar color="#shadow" class="title">
-        <template #left>
-            <VaNavbarItem>
-                <span style="font-size: 2rem; color: greenyellow">{{
-                    title.title
-                }}</span>
-            </VaNavbarItem>
-        </template>
-        <template #right>
-            <VaNavbarItem textColor="primary">
-                <span
-                    v-if="title.showTotal"
-                    style="font-size: 2rem; margin-right: 2rem; color: #000"
-                    >{{ designStore.totalPrice }} €</span
-                >
-                <span> </span>
-                <VaButton @click="navigateToNewPage()">
-                    {{ title.action }}
-                </VaButton>
-            </VaNavbarItem>
-        </template>
-    </VaNavbar>
-    <!-- Container -->
+    <Navigation></Navigation>
     <div class="full-width-container">
         <NuxtPage />
     </div>
@@ -31,6 +8,7 @@
 <script setup lang="ts">
 import { designStore } from './src/stores/design'
 import { useTitleStore } from '~/src/stores/title'
+import Navigation from '@/src/components/Navigation.vue'
 
 const titleStore = useTitleStore()
 
