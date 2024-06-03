@@ -1,9 +1,6 @@
-
-
 type requestBodyType = {
-    address: string,
+    address: string
     name: string
-    
 }
 
 function validateRequestBody(body: requestBodyType) {

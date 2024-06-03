@@ -42,7 +42,7 @@ export const useDesignStore = () => {
         if (!motive.value) return
         const imageElements = document.getElementsByClassName('optionalImg')
 
-        for (let imageElement of imageElements) {
+        for (const imageElement of imageElements) {
             imageElement.setAttribute('href', motive.value.img)
         }
     }
@@ -67,8 +67,6 @@ export const useDesignStore = () => {
         motives.value = response.data
     }
 
-
-
     watch(
         () => color.value?.price,
         (newColorPrice) => {
@@ -88,11 +86,9 @@ export const useDesignStore = () => {
     )
 
     const totalPrice = computed((): string => {
-        let result = motivePrice.value + colorPrice.value
+        const result = motivePrice.value + colorPrice.value
 
-        const roundedResult = result.toFixed(2)
-
-        return roundedResult
+        return result.toFixed(2)
     })
 
     return {

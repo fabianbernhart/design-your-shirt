@@ -4,8 +4,22 @@
             <div class="flex-item">
                 <TShirtDesigner class="shirt" />
                 <div class="description">
-                    <p>Motive: {{ designStore.motive.value ? designStore.motive.value.name : "Not Selected" }}</p>
-                    <p>Shirt: {{ designStore.color.value ? designStore.color.value.name: "Not selected" }}</p>
+                    <p>
+                        Motive:
+                        {{
+                            designStore.motive.value
+                                ? designStore.motive.value.name
+                                : 'Not Selected'
+                        }}
+                    </p>
+                    <p>
+                        Shirt:
+                        {{
+                            designStore.color.value
+                                ? designStore.color.value.name
+                                : 'Not selected'
+                        }}
+                    </p>
                 </div>
             </div>
             <div class="flex-item card">
@@ -19,50 +33,56 @@
                     </p>
                 </div>
                 <hr />
-                <p>
-                    Total: {{designStore.totalPrice.value}} €
-                </p>
+                <p>Total: {{ designStore.totalPrice.value }} €</p>
             </div>
             <div class="flex-item card">
                 <h2>Personal Data</h2>
                 <VaForm ref="formRef">
-                    <VaInput class="personal-data-input"
+                    <VaInput
+                        class="personal-data-input"
                         v-model="form.name"
-                        :rules="[(value) => (value && value.length > 0) || 'Name is required']"
+                        :rules="[
+                            (value) =>
+                                (value && value.length > 0) ||
+                                'Name is required'
+                        ]"
                         label="Name"
                         :autofocus="true"
                     />
-                    <VaInput class="personal-data-input"
+                    <VaInput
+                        class="personal-data-input"
                         v-model="form.address"
-                        :rules="[(value) => (value && value.length > 0) || 'Address is required']"
+                        :rules="[
+                            (value) =>
+                                (value && value.length > 0) ||
+                                'Address is required'
+                        ]"
                         label="Address"
                     />
                 </VaForm>
             </div>
         </div>
 
-        <VaButton color="success" :disabled="!isValid"
-            >
-            Buy ({{ designStore.totalPrice }} €)</VaButton>
+        <VaButton color="success" :disabled="!isValid">
+            Buy ({{ designStore.totalPrice }} €)</VaButton
+        >
     </div>
 </template>
 
 <script setup lang="ts">
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import { designStore } from '@/src/stores/design'
-import { useForm } from 'vuestic-ui';
+import { useForm } from 'vuestic-ui'
 
 if (!designStore.color.value) {
-    designStore.fetchColors();
+    designStore.fetchColors()
 }
 
-
-const { isValid} = useForm('formRef');
-
+const { isValid } = useForm('formRef')
 
 const form = ref({
     name: '',
-    address: '',
+    address: ''
 })
 
 const buy = () => {}
@@ -131,28 +151,23 @@ watch(
 }
 
 @media (max-width: 900px) {
+    .content {
+        display: contents;
+        flex-direction: row;
+        width: 100vw;
+        align-items: center;
+    }
 
-  .content {
-    display: contents;
-    flex-direction: row;
-    width: 100vw;
-    align-items: center;
-  }
+    .description {
+        font-size: small;
+    }
 
-  .description {
-    font-size: small;
-  }
-
-  .flex-item {
-    display: block;
-    min-width: 100%;
-  }
-  .personal-data-input {
-    width: 100%;
-  }
+    .flex-item {
+        display: block;
+        min-width: 100%;
+    }
+    .personal-data-input {
+        width: 100%;
+    }
 }
-
-
-
-
 </style>
