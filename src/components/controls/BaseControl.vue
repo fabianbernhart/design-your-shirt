@@ -1,6 +1,6 @@
 <template>
     <div class="color-switcher">
-        <div class="arrow" v-if="canScrollPrev" @click="prevColors">
+        <div class="arrow" v-if="canScrollPrev" @click="prevItem">
             <slot name="up-arrow">
                 <span>&uarr;</span>
             </slot>
@@ -8,22 +8,14 @@
         <div class="colors-container" @wheel="handleScroll">
             <slot
                 name="items"
-                v-for="(color, index) in visibleColors"
-                :color="color"
+                v-for="(item, index) in visibleColors"
                 :index="index"
                 :key="index"
             >
-                <div
-                    class="color-circle"
-                    :style="[
-                        getItemClass(color),
-                        { backgroundColor: color.color }
-                    ]"
-                    @click="setColor(color)"
-                ></div>
+                <slot name="item" @click="handleItemSelect(item)"></slot>
             </slot>
         </div>
-        <div class="arrow" v-if="canScrollNext" @click="nextColors">
+        <div class="arrow" v-if="canScrollNext" @click="nextItem">
             <slot name="down-arrow">
                 <span>&darr;</span>
             </slot>
@@ -45,50 +37,57 @@ const props = withDefaults(
     defineProps<{
         initialIndex?: number
         visibleCount?: number
+        items: unknown[],
+        "v-model": unknown
     }>(),
     {
         initialIndex: 0,
-        visibleCount: 5
+        visibleCount: 5,
     }
 )
 
-const emit = defineEmits(['color-change'])
-
-designStore.fetchColors()
-
-const visibleCount = ref(props.visibleCount)
-const startIndex = ref(0)
-
-const colors = computed<Color[]>(() => designStore.colors.value)
-const visibleColors = computed(() =>
-    colors.value.slice(startIndex.value, startIndex.value + visibleCount.value)
-)
-const canScrollPrev = computed(() => startIndex.value > 0)
-const canScrollNext = computed(
-    () => startIndex.value + visibleCount.value < colors.value.length
-)
-
-const setColor = (color: Color) => {
-    designStore.color.value = color
-    designStore.updateColor()
-}
-
-const prevColors = () => {
+const prevItem = () => {
     startIndex.value = Math.max(startIndex.value - visibleCount.value, 0)
 }
-const nextColors = () => {
+const nextItem = () => {
     startIndex.value = Math.min(
         startIndex.value + visibleCount.value,
-        colors.value.length - visibleCount.value
+        items.value.length - visibleCount.value
     )
 }
 const handleScroll = (event: WheelEvent) => {
     if (event.deltaY > 0) {
-        nextColors()
+        nextItem()
     } else {
-        prevColors()
+        prevItem()
     }
 }
+
+const items = computed<unknown[]>(() => props.items)
+
+
+const emit = defineEmits(['select', 'load'])
+
+const handleItemSelect = (item: unknown) => {
+    emit('select', item);
+}
+
+const visibleCount = ref(props.visibleCount)
+const startIndex = ref(0)
+
+
+const visibleColors = computed(() =>
+items.value.slice(startIndex.value, startIndex.value + visibleCount.value)
+)
+const canScrollPrev = computed(() => startIndex.value > 0)
+const canScrollNext = computed(
+    () => startIndex.value + visibleCount.value < items.value.length
+)
+
+const setItem = (item: unknown) => {
+}
+
+
 
 const getItemClass = (color: Color): { border: string } | {} => {
     if (designStore.color.value == color) {
@@ -96,6 +95,12 @@ const getItemClass = (color: Color): { border: string } | {} => {
     }
     return {}
 }
+
+
+onMounted(() => {
+    designStore.fetchColors()
+    emit('load');
+}),
 </script>
 
 <style scoped>

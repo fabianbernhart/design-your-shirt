@@ -1,4 +1,12 @@
-function validateRequestBody(body: any) {
+
+
+type requestBodyType = {
+    address: string,
+    name: string
+    
+}
+
+function validateRequestBody(body: requestBodyType) {
     const { address, name } = body
 
     const errors: {

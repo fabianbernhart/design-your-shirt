@@ -14,7 +14,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import ColorSwitcher from '@/src/components/ColorSwitcher.vue'
 import MotiveSwitcher from '@/src/components/MotiveSwitcher.vue'
@@ -27,7 +27,7 @@ import MotiveSwitcher from '@/src/components/MotiveSwitcher.vue'
 .controls-container-left,
 .controls-container-right {
     margin-top: 5rem;
-    width: 200px; /* Adjust the width of the control containers */
+    width: 200px;
 }
 
 .controls-container-right {
@@ -43,7 +43,8 @@ import MotiveSwitcher from '@/src/components/MotiveSwitcher.vue'
 }
 
 .shirt-container {
-    flex-grow: 1; /* Allow the shirt container to grow and take available space */
+    width: 100vw;
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;

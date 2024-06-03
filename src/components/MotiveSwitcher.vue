@@ -12,7 +12,6 @@
                 v-for="(color, index) in visibleColors"
                 :index="index"
                 :key="index"
-                
             >
                 <img
                     class="rounded-rectangle"
@@ -33,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useDesignStore } from '@/src/stores/design'
+import { designStore } from '@/src/stores/design'
 
 type Motive = {
     name: string
@@ -52,14 +51,13 @@ const props = withDefaults(
     }
 )
 
-const getItemClass = ((motive: Motive): {border: string} | string => {
-    if (designStore.motive.value == motive ) {
-        return ({ border: "5px solid #000"})
+const getItemClass = (motive: Motive): { border: string } | string => {
+    if (designStore.motive.value == motive) {
+        return { border: '5px solid #000' }
     }
-    return ""
-})
+    return ''
+}
 
-const designStore = useDesignStore()
 designStore.fetchMotives()
 
 const visibleCount = ref(props.visibleCount)
@@ -75,8 +73,6 @@ const canScrollNext = computed(
 )
 
 const setMotive = (motive: Motive) => {
-    console.debug("SET MOTIVE", motive.img)
-
     designStore.motive.value = motive
     designStore.changeImg()
 }

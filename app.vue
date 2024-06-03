@@ -3,29 +3,40 @@
     <VaNavbar color="#shadow" class="title">
         <template #left>
             <VaNavbarItem>
-                <span color="red">Design your Shirt</span>
+                <span style="font-size: 2rem; color: greenyellow">{{
+                    title.title
+                }}</span>
             </VaNavbarItem>
         </template>
         <template #right>
             <VaNavbarItem textColor="primary">
-                <span>{{}}</span>
-                <VaButton>Go to Checkout</VaButton>
+                <span style="font-size: 2rem; margin-right: 2rem; color: #000"
+                    >{{ designStore.totalPrice }} €</span
+                >
+                <span> </span>
+                <VaButton @click="navigateToNewPage()">
+                    {{ title.action }}
+                </VaButton>
             </VaNavbarItem>
         </template>
     </VaNavbar>
     <!-- Container -->
     <div class="full-width-container">
         <NuxtPage />
-        <!-- <DesignerPage style="width: 100vw" /> -->
     </div>
 </template>
 
-<script lang="ts">
-import { useDesignStore } from './src/stores/design'
+<script setup lang="ts">
+import { designStore } from './src/stores/design'
+import { useTitleStore } from '~/src/stores/title'
 
-const designStore = useDesignStore()
+const titleStore = useTitleStore()
 
-const test: ComputedRef<number> = designStore.totalPrice
+const navigateToNewPage = () => {
+    navigateTo(title.value.to)
+}
+
+const title = computed(() => titleStore.titleObject.value)
 </script>
 
 <style type="text/css">

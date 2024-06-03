@@ -1,6 +1,4 @@
 <template class="svg-template">
-    {{ designStore.motive.value?.img }}
-
     <svg
         version="1.1"
         id="Ebene_1"
@@ -168,22 +166,12 @@
             d="M198.5,27.3c0,0,15.9,16.2,58.7,16.2s61-13.6,61-13.6"
         />
 
-        <image
-            id="optionalImg"
-            class="rounded-rectangle"
-            x="210"
-            y="120"
-            width="100"
-            height="100"
-        />
+        <image class="optionalImg" x="210" y="120" width="100" height="100" />
     </svg>
 </template>
 
 <script setup lang="ts">
-import { useDesignStore } from '@/src/stores/design'
-
-const designStore = useDesignStore()
-
+import { designStore } from '@/src/stores/design'
 </script>
 
 <style scoped>

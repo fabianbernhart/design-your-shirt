@@ -15,29 +15,19 @@ export type Color = {
 }
 
 const host = 'http://localhost:3023'
+const properties = ['--st0-color', '--st1-color', '--st2-color']
 
 export const useDesignStore = () => {
-    const properties = ['--st0-color', '--st1-color', '--st2-color']
-
-    const motive = ref<Motive | null>(null)
-
-
     const color = ref<Color | null>(null)
-    const orderSuccess = ref<boolean>(false)
-
+    const motive = ref<Motive | null>(null)
     const motives = ref<Motive[]>([])
     const colors = ref<Color[]>([])
+    const orderSuccess = ref<boolean>(false) // not used
 
-    const totalPrice = computed(() => {
-        const motivePrice: number = motive.value ? motive.value.price : 0
-        const colorPrice: number = color.value ? color.value.price : 0
+    const motivePrice = ref<number>(0)
+    const colorPrice = ref<number>(0)
 
-        const result: number = motivePrice + colorPrice
-
-        return result
-    })
-
-    const changeColors = () => {
+    const updateColor = () => {
         if (!color.value) return
 
         for (const property of properties) {
@@ -50,47 +40,77 @@ export const useDesignStore = () => {
 
     const changeImg = () => {
         if (!motive.value) return
-        const imageElement = document.getElementById('optionalImg')
+        const imageElements = document.getElementsByClassName('optionalImg')
 
-        if (!imageElement) return
-        
-        imageElement.setAttribute("href", motive.value.img )
+        for (let imageElement of imageElements) {
+            imageElement.setAttribute('href', motive.value.img)
+        }
     }
 
-
-    const fetchColors = async () => {
+    const getColors = async () => {
         const response = await axios.get(`${host}/api/colors`)
         colors.value = response.data
+
+        if (!color.value) {
+            color.value = colors.value[0]
+            updateColor()
+        }
     }
 
-    const fetchMotives = async () => {
+    const getMotives = async () => {
         const response = await axios.get(`${host}/api/motives`)
         motives.value = response.data
     }
 
-    const designAnotherProduct = () => {
-        orderSuccess.value = false
-        motive.value = null
-        color.value = null
+    const createOrder = async (data: unknown[]) => {
+        const response = await axios.get(`${host}/api/order`)
+        motives.value = response.data
     }
 
-    const init = async () => {
-        await fetchColors()
-        await fetchMotives()
-    }
+
+
+    watch(
+        () => color.value?.price,
+        (newColorPrice) => {
+            if (!newColorPrice) return
+            colorPrice.value = newColorPrice
+        },
+        { immediate: true }
+    )
+
+    watch(
+        () => motive.value?.price,
+        (newMotivePrice) => {
+            if (!newMotivePrice) return
+            motivePrice.value = newMotivePrice
+        },
+        { immediate: true }
+    )
+
+    const totalPrice = computed((): string => {
+        let result = motivePrice.value + colorPrice.value
+
+        const roundedResult = result.toFixed(2)
+
+        return roundedResult
+    })
 
     return {
+        motivePrice,
+        colorPrice,
         motive,
         color,
         orderSuccess,
         motives,
         colors,
         totalPrice,
-        changeColors,
+        updateColor,
         changeImg,
-        fetchMotives,
-        fetchColors,
-        designAnotherProduct,
-        init,
+        fetchMotives: getMotives,
+        fetchColors: getColors
     }
 }
+
+const designStore = useDesignStore()
+
+export { designStore }

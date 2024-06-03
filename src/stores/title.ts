@@ -1,22 +1,50 @@
-import { defineStore } from 'pinia'
+import { designStore } from '@/src/stores/design'
 
-// Define the type for the title
-type TitleState = {
-    title: string | null
+export type TitleObjectType = {
+    title: null | string
+    action: null | string
+    to: null | string
 }
 
-// Define and export the store
-export const useTitleStore = defineStore({
-    id: 'title',
-    state: (): TitleState => ({
-        title: null
-    }),
-    actions: {
-        setTitle(newTitle: string) {
-            this.title = newTitle
-        }
-    },
-    getters: {
-        getTitle: (state) => state.title
+export const useTitleStore = () => {
+    const route = useRoute()
+
+    const titleObject = ref<TitleObjectType>({
+        title: 'null',
+        action: 'null',
+        to: 'null'
+    })
+
+    const getTitle = computed<TitleObjectType>(() => titleObject.value)
+
+    const setTitle = (newTitleObject: TitleObjectType) => {
+        titleObject.value = newTitleObject
     }
-})
+
+    watch(
+        () => route.path,
+        (newPath) => {
+            if (newPath === '/designer') {
+                setTitle({
+                    title: 'Design your shirt',
+                    action: 'Go to Checkout',
+                    to: '/checkout'
+                })
+            } else if (newPath === '/checkout') {
+                setTitle({
+                    title: 'Checkout',
+                    action: 'Back',
+                    to: '/designer'
+                })
+            }
+            designStore.changeImg()
+        },
+        { immediate: true }
+    )
+
+    return {
+        titleObject,
+        getTitle,
+        setTitle
+    }
+}
