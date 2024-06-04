@@ -1,0 +1,6 @@
+{
+    "name": "Node.js Development",
+    "dockerFile": "./Dockerfile",
+    "appPort": [3023]
+  }
+  
