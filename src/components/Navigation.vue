@@ -2,15 +2,12 @@
     <VaNavbar color="#shadow" class="title">
         <template #left>
             <VaNavbarItem>
-                <span class="title">{{
-                    title.title
-                }}</span>
+                <span class="title">{{ title.title }}</span>
             </VaNavbarItem>
         </template>
         <template #right>
             <VaNavbarItem textColor="primary">
-                <span
-                    v-if="title.showTotal" class="price"
+                <span v-if="title.showTotal" class="price"
                     >{{ designStore.totalPrice }} €</span
                 >
                 <span> </span>
@@ -38,7 +35,6 @@ const title = computed(() => titleStore.titleObject.value)
 </script>
 
 <style scoped>
-
 .title {
     font-size: 2rem;
     color: greenyellow;
@@ -48,5 +44,15 @@ const title = computed(() => titleStore.titleObject.value)
     margin-right: 2rem;
     color: #000;
 }
-
+@media (max-width: 550px) {
+    .price {
+        font-size: large;
+        margin-right: 0.5rem;
+        color: #000;
+    }
+    .title {
+        font-size: larger;
+        color: greenyellow;
+    }
+}
 </style>

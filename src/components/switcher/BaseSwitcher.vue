@@ -29,16 +29,14 @@ const props = withDefaults(
     defineProps<{
         initialIndex?: number
         visibleCount?: number
-        items: any[];
+        items: any[]
     }>(),
     {
         initialIndex: 0,
         visibleCount: 5,
-        items: Array,
+        items: Array
     }
 )
-
-
 
 const visibleCount = ref(props.visibleCount)
 const startIndex = ref(props.initialIndex)

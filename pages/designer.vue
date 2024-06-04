@@ -1,99 +1,93 @@
 <template>
-    <div class="container">
-        <div class="controls-container-left flex-item">
-            <div>
-                <ColorSwitcher></ColorSwitcher>
-            </div>
-        </div>
-        <div class="shirt-container">
+    <div v-if="breakpoint.smDown">
+        <div class="flex-item shirt-container">
             <TShirtDesigner></TShirtDesigner>
         </div>
-        <div class="controls-container-right flex-item">
+        <div class="flex-item switchers">
+            <ColorSwitcher></ColorSwitcher>
+            <MotiveSwitchers></MotiveSwitchers>
+        </div>
+    </div>
+
+    <div v-else class="flex-container">
+        <div class="flex-item color-switcher">
+            <ColorSwitcher></ColorSwitcher>
+        </div>
+        <div class="flex-item shirt-container">
+            <TShirtDesigner></TShirtDesigner>
+        </div>
+        <div class="flex-item motive-switcher">
             <MotiveSwitchers></MotiveSwitchers>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import ColorSwitcher from '@/src/components/switcher/ColorSwitcher.vue';
-import TShirtDesigner from '@/src/components/TShirtDesigner.vue';
+import ColorSwitcher from '@/src/components/switcher/ColorSwitcher.vue'
+import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 
-import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue';
+import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
+
+const breakpoint = useBreakpoint()
 </script>
 
 <style scoped>
-.container {
-    margin-top: 5rem;
-}
-.controls-container-left,
-.controls-container-right {
-    margin-top: 5rem;
-    width: 200px;
-}
-
-.controls-container-right {
-    position: absolute;
-    top: 0;
-    right: 0;
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    width: 100vw;
 }
 
-.controls-container-left {
-    position: absolute;
-    top: 0;
-    left: 0;
+.flex-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.color-switcher {
+    flex: 1;
+    justify-content: flex-start;
 }
 
 .shirt-container {
-    width: 100vw;
-    flex-grow: 1;
-    display: flex;
+    flex: 1;
     justify-content: center;
-    align-items: center;
+    width: 60%; /* Adjust the width as needed */
+    height: auto;
 }
 
-@media (max-width: 799px) {
-    .shirt-container {
-            height: 50vh;
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-    }
+.motive-switcher {
+    flex: 1;
+    justify-content: flex-end;
 
+    align-items: end;
+}
+
+.switchers {
+    align-items: center;
+    rotate: 90deg;
+    scale: 0.9;
+}
+
+@media screen and (max-width: 1016px) {
+    .flex-container {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+    }
 
     .flex-item {
-        display: flex;
-        width: 100%;
-    }
-    .controls-container-right {
-        top: 70%;
-        transform: rotate(90deg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100px;
-    }
-
-    .controls-container-left {
-        top: 80%;
-        transform: rotate(90deg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100px;
+        width: auto;
+        height: auto;
     }
 }
 
-@media (max-width: 450px) {
-    .controls-container-right,
-    .controls-container-left {
-        scale: 0.6
+@media (max-width: 400px) {
+    .switchers {
+        scale: 0.7;
     }
-
-
 }
-
-
 </style>

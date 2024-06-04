@@ -70,7 +70,7 @@ import { useForm } from 'vuestic-ui'
 const { personalData, color, createOrder, motive } = designStore
 
 if (!color.value || !motive.value) {
-    navigateTo("/designer")
+    navigateTo('/designer')
 }
 
 const { maxLengthRules, notIncludes, requiredRules } = validation
@@ -85,7 +85,6 @@ const nameRules = [
 const addressRules = [requiredRules('Address')]
 const buy = () => {
     createOrder(designStore.personalData.value)
-    navigateTo('/order-success')
 }
 </script>
 

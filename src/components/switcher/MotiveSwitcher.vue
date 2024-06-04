@@ -1,25 +1,23 @@
 <template>
     <BaseControl :items="motiveList">
         <template #items="{ item }">
-            <div
-                class="rounded-rectangle"
-                @click="setMotive(item)"
-            ><img
+            <div class="rounded-rectangle" @click="setMotive(item)">
+                <img
                     class="rounded-rectangle"
                     :style="getItemClass(item)"
                     :src="item.img"
                     height="20rem"
                     width="50rem"
-                /></div>
+                />
+            </div>
         </template>
     </BaseControl>
 </template>
 
 <script setup lang="ts">
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design';
-import type { Motive } from '~/src/stores/design';
-
+import { designStore } from '~/src/stores/design'
+import type { Motive } from '~/src/stores/design'
 
 designStore.getMotives()
 
@@ -39,7 +37,6 @@ const setMotive = (motive: Motive) => {
 </script>
 
 <style scoped>
-
 .rounded-rectangle {
     width: 100px;
     height: 100px;
@@ -60,7 +57,7 @@ const setMotive = (motive: Motive) => {
 }
 
 .rounded-rectangle:hover {
-    border-color: var(--primary-color); /* Change border color on hover */
+    border-color: #000; /* Change border color on hover */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
 }
 
@@ -68,6 +65,4 @@ const setMotive = (motive: Motive) => {
     border: 3px solid var(--secondary-color);
     padding: 5px;
 }
-
-
 </style>

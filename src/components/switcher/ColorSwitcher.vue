@@ -3,10 +3,7 @@
         <template #items="{ item }">
             <div
                 class="color-circle"
-                :style="[
-                        getItemClass(item),
-                        { backgroundColor: item.color }
-                    ]"
+                :style="[getItemClass(item), { backgroundColor: item.color }]"
                 @click="setColor(item)"
             ></div>
         </template>
@@ -15,14 +12,12 @@
 
 <script setup lang="ts">
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design';
-import type { Color } from '~/src/stores/design';
-
+import { designStore } from '~/src/stores/design'
+import type { Color } from '~/src/stores/design'
 
 designStore.getColors()
 
 const colors = computed<Color[]>(() => designStore.colors.value)
-
 
 const setColor = (color: Color) => {
     designStore.color.value = color
@@ -43,7 +38,7 @@ const getItemClass = (color: Color): { border: string } | {} => {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 2px solid var(--secondary-color);
+    border: 2px solid var(--va--secondary-color);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -56,7 +51,7 @@ const getItemClass = (color: Color): { border: string } | {} => {
 }
 
 .color-circle:hover {
-    border-color: var(--primary-color); /* Change border color on hover */
+    border-color: #000; /* Change border color on hover */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
 }
 
@@ -64,5 +59,4 @@ const getItemClass = (color: Color): { border: string } | {} => {
     border: 3px solid var(--secondary-color);
     padding: 5px;
 }
-
 </style>

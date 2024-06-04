@@ -1,9 +1,6 @@
 // stores/design.js
 import { ref, computed } from 'vue'
 import axios from 'axios'
-import { da } from '@faker-js/faker'
-import { createPinia, setActivePinia } from 'pinia'
-import type { RefSymbol } from '@vue/reactivity'
 
 export type Motive = {
     name: string
@@ -17,7 +14,7 @@ export type Color = {
     price: number
 }
 
-const host = 'http://localhost:3023'
+const host = 'http://localhost:3000'
 const properties = ['--st0-color', '--st1-color', '--st2-color']
 
 export const useDesignStore = () => {
@@ -51,14 +48,22 @@ export const useDesignStore = () => {
         if (!motive.value) return
         const imageElements = document.getElementsByClassName('optionalImg')
 
+        if (!imageElements) return
+
         for (const imageElement of imageElements) {
             imageElement.setAttribute('href', motive.value.img)
         }
     }
 
     const getColors = async () => {
-        const response = await axios.get(`${host}/api/colors`)
-        colors.value = response.data
+        await axios
+            .get(`${host}/api/colors`)
+            .then((response) => {
+                colors.value = response.data
+            })
+            .catch((e) => {
+                console.error(e)
+            })
 
         if (!color.value) {
             color.value = colors.value[0]
@@ -67,9 +72,14 @@ export const useDesignStore = () => {
     }
 
     const getMotives = async () => {
-        const response = await axios.get(`${host}/api/motives`)
-        motives.value = response.data
-
+        await axios
+            .get(`${host}/api/motives`)
+            .then((response) => {
+                motives.value = response.data
+            })
+            .catch((error) => {
+                console.error('Order creation failed', error)
+            })
 
         if (!motive.value) {
             motive.value = motives.value[0]
@@ -78,7 +88,14 @@ export const useDesignStore = () => {
     }
 
     const createOrder = async (data: { name: string; address: string }) => {
-        const response = await axios.post(`${host}/api/order`, data)
+        const response = await axios
+            .post(`${host}/api/order`, data)
+            .then(() => {
+                navigateTo('/order-success')
+            })
+            .catch((e) => {
+                console.error(e)
+            })
 
         console.debug(response)
     }
