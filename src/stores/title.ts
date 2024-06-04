@@ -39,6 +39,7 @@ export const useTitleStore = () => {
                     action: 'Back',
                     to: '/designer'
                 })
+                designStore.updateMotive()
             } else if (newPath === '/order-success') {
                 setTitle({
                     title: 'Order success',

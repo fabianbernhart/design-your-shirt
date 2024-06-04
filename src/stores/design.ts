@@ -33,7 +33,6 @@ export const useDesignStore = () => {
 
     const updateColor = () => {
         if (!color.value) return
-
         if (!document) return
 
         for (const property of properties) {
@@ -46,9 +45,9 @@ export const useDesignStore = () => {
 
     const updateMotive = () => {
         if (!motive.value) return
-        const imageElements = document.getElementsByClassName('optionalImg')
+        if (!document) return
 
-        if (!imageElements) return
+        const imageElements = document.getElementsByClassName('optionalImg')
 
         for (const imageElement of imageElements) {
             imageElement.setAttribute('href', motive.value.img)
@@ -152,6 +151,7 @@ export const useDesignStore = () => {
         totalPrice,
         updateColor,
         changeImg: updateMotive,
+        updateMotive,
         getMotives,
         getColors,
         createOrder,

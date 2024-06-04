@@ -67,7 +67,9 @@ import { designStore } from '@/src/stores/design'
 import { validation } from '@/src/stores/validation'
 import { useForm } from 'vuestic-ui'
 
-const { personalData, color, createOrder, motive } = designStore
+const { personalData, color, createOrder, motive, updateMotive } = designStore
+
+updateMotive()
 
 if (!color.value || !motive.value) {
     navigateTo('/designer')
