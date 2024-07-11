@@ -1,6 +1,5 @@
 // stores/design.js
 import { ref, computed } from 'vue'
-import axios from 'axios'
 
 export type Motive = {
     name: string
@@ -54,50 +53,79 @@ export const useDesignStore = () => {
         }
     }
 
-    const getColors = async () => {
-        await axios
-            .get(`${host}/api/colors`)
-            .then((response) => {
-                colors.value = response.data
-            })
-            .catch((e) => {
-                console.error(e)
-            })
+    const getColors = (): void => {
+        useFetch<Color[]>('/api/colors')
+            .then(({ data, error }) => {
+                if (error.value) {
+                    console.error("Error loading '/api/colors':", error.value)
+                    return
+                }
 
-        if (!color.value) {
-            color.value = colors.value[0]
-            updateColor()
-        }
+                if (!data.value) {
+                    console.error("No data returned from '/api/colors'")
+                    return
+                }
+
+                colors.value = data.value
+
+                if (!color.value) {
+                    color.value = colors.value[0] || null
+                    updateColor()
+                }
+            })
+            .catch((err) => {
+                console.error('An unexpected error occurred:', err)
+            })
     }
 
-    const getMotives = async () => {
-        await axios
-            .get(`${host}/api/motives`)
-            .then((response) => {
-                motives.value = response.data
-            })
-            .catch((error) => {
-                console.error('Order creation failed', error)
-            })
+    const getMotives = (): void => {
+        useFetch<Motive[]>('/api/motives')
+            .then(({ data, error }) => {
+                if (error.value) {
+                    console.error("Error loading '/api/motives':", error.value)
+                    return
+                }
 
-        if (!motive.value) {
-            motive.value = motives.value[0]
-            updateMotive()
-        }
+                if (!data.value) {
+                    console.error("No data returned from '/api/motives'")
+                    return
+                }
+
+                motives.value = data.value
+
+                if (!motive.value) {
+                    motive.value = motives.value[0] || null
+                    updateMotive()
+                }
+            })
+            .catch((err) => {
+                console.error('An unexpected error occurred:', err)
+            })
     }
 
-    const createOrder = async (data: { name: string; address: string }) => {
-        const response = await axios
-            .post(`${host}/api/order`, data)
-            .then(() => {
-                navigateTo('/order-success')
-            })
-            .catch((e) => {
-                console.error(e)
-            })
-
-        console.debug(response)
-    }
+    const createOrder = async (order: { name: string; address: string }) => {
+        useFetch('/api/order', {
+            method: 'post',
+            body: {
+                name: order.name,
+                address: order.address,
+            }
+        })
+        .then(({ data, error }) => {
+            if (error.value) {                
+                console.error("Error creating order:", error.value);
+                return;
+            }
+    
+            if (!data.value) {
+                console.error("No data returned from order creation");
+                return;
+            }
+        })
+        .catch((err) => {
+            console.error("An unexpected error occurred:", err);
+        });
+    };
 
     watch(
         () => color.value?.price,
