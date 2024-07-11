@@ -121,6 +121,10 @@ export const useDesignStore = () => {
                 console.error("No data returned from order creation");
                 return;
             }
+
+            navigateTo("order-success")
+
+
         })
         .catch((err) => {
             console.error("An unexpected error occurred:", err);
