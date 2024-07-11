@@ -1,5 +1,6 @@
 {
   "name": "nuxt-app",
+  "version": "0.0.13",
   "private": true,
   "type": "module",
   "scripts": {
@@ -29,7 +30,6 @@
     "@nuxtjs/vuetify": "^1.12.3",
     "@pinia/nuxt": "^0.5.1",
     "@vuestic/nuxt": "^1.0.20",
-    "axios": "^1.7.2",
     "hammerjs": "^2.0.8",
     "pinia": "^2.1.6",
     "prettier": "^3.3.2"
