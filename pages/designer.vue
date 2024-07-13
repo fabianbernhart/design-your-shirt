@@ -28,17 +28,16 @@ import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
 import { useDesignStore } from '@/src/stores/design'
 
-const designStore = useDesignStore();
-const { colors, color } = storeToRefs(designStore);
+const designStore = useDesignStore()
+const { colors, color } = storeToRefs(designStore)
 
 if (colors.value.length == 0) {
-    designStore.getColors();
-    designStore.getMotives();
+    designStore.getColors()
+    designStore.getMotives()
 }
 
-designStore.updateColor();
-designStore.updateMotive();
-
+designStore.updateColor()
+designStore.updateMotive()
 
 const breakpoint = useBreakpoint()
 </script>

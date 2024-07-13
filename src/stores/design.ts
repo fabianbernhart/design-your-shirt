@@ -1,6 +1,6 @@
 // stores/design.js
 import { ref, computed } from 'vue'
-import { getActivePinia } from "pinia"
+import { getActivePinia } from 'pinia'
 
 export type Motive = {
     name: string
@@ -52,7 +52,7 @@ export const useDesignStore = defineStore('designStore', () => {
             imageElement.setAttribute('href', motive.value.img)
         }
     }
-    
+
     const getColors = (): void => {
         useFetch<Color[]>('/api/colors')
             .then(({ data, error }) => {
@@ -76,7 +76,6 @@ export const useDesignStore = defineStore('designStore', () => {
             .catch((err) => {
                 console.error('An unexpected error occurred:', err)
             })
-
     }
 
     const getMotives = (): void => {
@@ -109,28 +108,26 @@ export const useDesignStore = defineStore('designStore', () => {
             method: 'post',
             body: {
                 name: order.name,
-                address: order.address,
+                address: order.address
             }
         })
-        .then(({ data, error }) => {
-            if (error.value) {                
-                console.error("Error creating order:", error.value);
-                return;
-            }
-    
-            if (!data.value) {
-                console.error("No data returned from order creation");
-                return;
-            }
+            .then(({ data, error }) => {
+                if (error.value) {
+                    console.error('Error creating order:', error.value)
+                    return
+                }
 
-            navigateTo("order-success")
+                if (!data.value) {
+                    console.error('No data returned from order creation')
+                    return
+                }
 
-
-        })
-        .catch((err) => {
-            console.error("An unexpected error occurred:", err);
-        });
-    };
+                navigateTo('order-success')
+            })
+            .catch((err) => {
+                console.error('An unexpected error occurred:', err)
+            })
+    }
 
     watch(
         () => color.value?.price,
@@ -188,6 +185,6 @@ export const useDesignStore = defineStore('designStore', () => {
         updateMotive,
         getMotives,
         getColors,
-        createOrder,
+        createOrder
     }
 })

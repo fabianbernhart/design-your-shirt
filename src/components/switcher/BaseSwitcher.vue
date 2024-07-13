@@ -33,7 +33,7 @@ const props = withDefaults(
     }>(),
     {
         initialIndex: 0,
-        visibleCount: 5,
+        visibleCount: 5
     }
 )
 

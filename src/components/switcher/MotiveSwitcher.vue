@@ -19,8 +19,8 @@ import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
 import { useDesignStore } from '~/src/stores/design'
 import type { Motive } from '~/src/stores/design'
 
-const designStore = useDesignStore();
-const { motives, motive } = storeToRefs(designStore);
+const designStore = useDesignStore()
+const { motives, motive } = storeToRefs(designStore)
 
 const getItemClass = (motive: Motive): { border: string } | {} => {
     if (designStore.motive == motive) {

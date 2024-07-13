@@ -67,7 +67,7 @@ import { validation } from '@/src/stores/validation'
 import { useForm } from 'vuestic-ui'
 import { useDesignStore } from '@/src/stores/design'
 
-const designStore = useDesignStore();
+const designStore = useDesignStore()
 
 const { personalData, color, createOrder, motive, updateMotive } = designStore
 

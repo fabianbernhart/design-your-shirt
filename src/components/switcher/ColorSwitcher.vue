@@ -8,7 +8,6 @@
             ></div>
         </template>
     </BaseControl>
-
 </template>
 
 <script setup lang="ts">
@@ -16,11 +15,8 @@ import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
 import { useDesignStore } from '@/src/stores/design'
 import type { Color } from '@/src/stores/design'
 
-const designStore = useDesignStore();
-const { colors, color } = storeToRefs(designStore);
-
-
-
+const designStore = useDesignStore()
+const { colors, color } = storeToRefs(designStore)
 
 const getBorderStyle = (color: Color): { border: string } | {} => {
     if (designStore.color == color) {
@@ -29,13 +25,10 @@ const getBorderStyle = (color: Color): { border: string } | {} => {
     return {}
 }
 
-
 const setColor = (newColor: Color | null) => {
     color.value = newColor
     designStore.updateColor()
 }
-
-
 </script>
 
 <style scoped>

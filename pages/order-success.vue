@@ -12,7 +12,7 @@
 <script setup>
 import { useDesignStore } from '@/src/stores/design'
 
-const designStore = useDesignStore();
+const designStore = useDesignStore()
 
 const { personalData } = designStore
 
@@ -20,7 +20,6 @@ const { personalData } = designStore
 const navigateToDesignPage = () => {
     designStore.$reset()
     navigateTo('/designer')
-    
 }
 </script>
 

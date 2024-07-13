@@ -5,8 +5,6 @@ export type TitleObjectType = {
     showTotal?: boolean
 }
 
-
-
 export const useTitleStore = () => {
     const route = useRoute()
 
