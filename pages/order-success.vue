@@ -19,7 +19,11 @@ const { personalData } = designStore
 // Function to navigate to the design page
 const navigateToDesignPage = () => {
     designStore.$reset()
-    navigateTo('/designer')
+
+    navigateTo('/designer').catch((error) => {
+         console.error('Navigation error:', error)
+    })
+    
 }
 </script>
 
