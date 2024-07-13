@@ -22,19 +22,18 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import { ref, computed } from 'vue'
 
 const props = withDefaults(
     defineProps<{
         initialIndex?: number
         visibleCount?: number
-        items: any[]
+        items: T[]
     }>(),
     {
         initialIndex: 0,
         visibleCount: 5,
-        items: Array
     }
 )
 
