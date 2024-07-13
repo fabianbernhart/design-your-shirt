@@ -10,14 +10,17 @@
 </template>
 
 <script setup>
-import { designStore } from '@/src/stores/design'
+import { useDesignStore } from '@/src/stores/design'
+
+const designStore = useDesignStore();
 
 const { personalData } = designStore
 
 // Function to navigate to the design page
 const navigateToDesignPage = () => {
-    navigateTo('/designer')
     designStore.$reset()
+    navigateTo('/designer')
+    
 }
 </script>
 

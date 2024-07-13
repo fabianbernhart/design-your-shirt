@@ -22,8 +22,11 @@
 </template>
 
 <script setup lang="ts">
-import { designStore } from '@/src/stores/design'
+import { useDesignStore } from '@/src/stores/design'
 import { useTitleStore } from '@/src/stores/title'
+
+
+const designStore = useDesignStore();
 
 const titleStore = useTitleStore()
 

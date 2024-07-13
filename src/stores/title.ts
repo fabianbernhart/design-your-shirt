@@ -1,11 +1,11 @@
-import { designStore } from '@/src/stores/design'
-
 export type TitleObjectType = {
     title: null | string
     action: null | string
     to: null | string
     showTotal?: boolean
 }
+
+
 
 export const useTitleStore = () => {
     const route = useRoute()
@@ -23,6 +23,8 @@ export const useTitleStore = () => {
         titleObject.value = newTitleObject
     }
 
+    const designStore = useDesignStore()
+
     watch(
         () => route.path,
         (newPath) => {
@@ -33,6 +35,7 @@ export const useTitleStore = () => {
                     to: '/checkout',
                     showTotal: true
                 })
+                designStore.updateMotive()
             } else if (newPath === '/checkout') {
                 setTitle({
                     title: 'Checkout',

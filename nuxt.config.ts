@@ -4,8 +4,12 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@nuxtjs/tailwindcss',
         '@vuestic/nuxt',
-        '@nuxt/test-utils/module'
+        '@nuxt/test-utils/module',
+        '@pinia/nuxt',
     ],
+    pinia: {
+        storesDirs: ['src/stores/**'],
+      },
 
     devtools: { enabled: true }
 })

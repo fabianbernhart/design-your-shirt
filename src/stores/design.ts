@@ -1,5 +1,6 @@
 // stores/design.js
 import { ref, computed } from 'vue'
+import { getActivePinia } from "pinia"
 
 export type Motive = {
     name: string
@@ -13,10 +14,9 @@ export type Color = {
     price: number
 }
 
-const host = 'http://localhost:3000'
 const properties = ['--st0-color', '--st1-color', '--st2-color']
 
-export const useDesignStore = () => {
+export const useDesignStore = defineStore('designStore', () => {
     const color = ref<Color | null>(null)
     const motive = ref<Motive | null>(null)
     const motives = ref<Motive[]>([])
@@ -52,7 +52,7 @@ export const useDesignStore = () => {
             imageElement.setAttribute('href', motive.value.img)
         }
     }
-
+    
     const getColors = (): void => {
         useFetch<Color[]>('/api/colors')
             .then(({ data, error }) => {
@@ -76,6 +76,7 @@ export const useDesignStore = () => {
             .catch((err) => {
                 console.error('An unexpected error occurred:', err)
             })
+
     }
 
     const getMotives = (): void => {
@@ -181,16 +182,12 @@ export const useDesignStore = () => {
         motives,
         colors,
         totalPrice,
+        $reset,
         updateColor,
         changeImg: updateMotive,
         updateMotive,
         getMotives,
         getColors,
         createOrder,
-        $reset
     }
-}
-
-const designStore = useDesignStore()
-
-export { designStore }
+})

@@ -1,5 +1,5 @@
 <template>
-    <BaseControl :items="motiveList">
+    <BaseControl :items="motives">
         <template #items="{ item }">
             <div class="rounded-rectangle" @click="setMotive(item)">
                 <img
@@ -16,22 +16,21 @@
 
 <script setup lang="ts">
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design'
+import { useDesignStore } from '~/src/stores/design'
 import type { Motive } from '~/src/stores/design'
 
-designStore.getMotives()
-
-const motiveList = computed<Motive[]>(() => designStore.motives.value)
+const designStore = useDesignStore();
+const { motives, motive } = storeToRefs(designStore);
 
 const getItemClass = (motive: Motive): { border: string } | {} => {
-    if (designStore.motive.value == motive) {
+    if (designStore.motive == motive) {
         return { border: '5px solid #000' }
     }
     return {}
 }
 
-const setMotive = (motive: Motive) => {
-    designStore.motive.value = motive
+const setMotive = (newMotive: Motive) => {
+    motive.value = newMotive
     designStore.changeImg()
 }
 </script>

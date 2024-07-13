@@ -1,35 +1,41 @@
-<template>
+<template style="border: 1px red solid">
     <BaseControl :items="colors">
         <template #items="{ item }">
             <div
                 class="color-circle"
-                :style="[getItemClass(item), { backgroundColor: item.color }]"
+                :style="[getBorderStyle(item), { backgroundColor: item.color }]"
                 @click="setColor(item)"
             ></div>
         </template>
     </BaseControl>
+
 </template>
 
 <script setup lang="ts">
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { designStore } from '~/src/stores/design'
-import type { Color } from '~/src/stores/design'
+import { useDesignStore } from '@/src/stores/design'
+import type { Color } from '@/src/stores/design'
 
-designStore.getColors()
+const designStore = useDesignStore();
+const { colors, color } = storeToRefs(designStore);
 
-const colors = computed<Color[]>(() => designStore.colors.value)
 
-const setColor = (color: Color) => {
-    designStore.color.value = color
-    designStore.updateColor()
-}
 
-const getItemClass = (color: Color): { border: string } | {} => {
-    if (designStore.color.value == color) {
-        return { border: '4px solid #000' }
+
+const getBorderStyle = (color: Color): { border: string } | {} => {
+    if (designStore.color == color) {
+        return { border: '5px solid #000' }
     }
     return {}
 }
+
+
+const setColor = (newColor: Color | null) => {
+    color.value = newColor
+    designStore.updateColor()
+}
+
+
 </script>
 
 <style scoped>
