@@ -1,13 +1,11 @@
-<template>
-    <BaseControl :items="motives">
+<template style="border: 1px red solid">
+    <BaseControl :row="props.row" :items="motives">
         <template #items="{ item }">
-            <div class="rounded-rectangle" @click="setMotive(item)">
+            <div @click="setMotive(item)">
                 <img
                     class="rounded-rectangle"
                     :style="getItemClass(item)"
                     :src="item.img"
-                    height="20rem"
-                    width="50rem"
                 />
             </div>
         </template>
@@ -22,6 +20,15 @@ import type { Motive } from '~/src/stores/design'
 const designStore = useDesignStore()
 const { motives, motive } = storeToRefs(designStore)
 
+const props = withDefaults(
+    defineProps<{
+        row?: boolean
+    }>(),
+    {
+        row: false
+    }
+)
+
 const getItemClass = (motive: Motive): { border: string } | {} => {
     if (designStore.motive == motive) {
         return { border: '5px solid #000' }
@@ -31,7 +38,6 @@ const getItemClass = (motive: Motive): { border: string } | {} => {
 
 const setMotive = (newMotive: Motive) => {
     motive.value = newMotive
-    designStore.changeImg()
 }
 </script>
 
@@ -41,7 +47,7 @@ const setMotive = (newMotive: Motive) => {
     height: 100px;
     margin: 5px 0;
     border-radius: 10px; /* Adjust border-radius to control the roundness */
-    border: 2px solid var(--secondary-color);
+    border: 2px solid none;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -61,7 +67,7 @@ const setMotive = (newMotive: Motive) => {
 }
 
 .color-circle.active {
-    border: 3px solid var(--secondary-color);
+    border: 3px solid #000;
     padding: 5px;
 }
 </style>

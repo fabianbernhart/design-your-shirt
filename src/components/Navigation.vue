@@ -7,10 +7,12 @@
         </template>
         <template #right>
             <VaNavbarItem textColor="primary">
-                <span v-if="title.showTotal" class="price"
-                    >{{ designStore.totalPrice }} €</span
-                >
-                <span> </span>
+                <ClientOnly>
+                    <span v-if="title.showTotal" class="price"
+                        >{{ totalPrice }} €</span
+                    >
+                </ClientOnly>
+
                 <VaButton @click="navigateToNewPage()">
                     {{ title.action }}
                 </VaButton>
@@ -26,6 +28,7 @@ import { useDesignStore } from '@/src/stores/design'
 import { useTitleStore } from '@/src/stores/title'
 
 const designStore = useDesignStore()
+const { totalPrice } = storeToRefs(designStore)
 
 const titleStore = useTitleStore()
 

@@ -19,5 +19,5 @@ function generateMotives(count: number) {
 }
 
 export default defineEventHandler((event) => {
-    return generateMotives(6)
+    return generateMotives(10)
 })

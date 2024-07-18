@@ -21,9 +21,8 @@ const navigateToDesignPage = () => {
     designStore.$reset()
 
     navigateTo('/designer').catch((error) => {
-         console.error('Navigation error:', error)
+        console.error('Navigation error:', error)
     })
-    
 }
 </script>
 

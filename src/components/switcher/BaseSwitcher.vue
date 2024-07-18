@@ -1,11 +1,15 @@
 <template>
-    <div class="base-switcher">
+    <div :class="`base-switcher--${directionClass}`">
         <div class="arrow" v-if="canScrollPrev" @click="prevItems">
             <slot name="up-arrow">
-                <span>&uarr;</span>
+                <span v-if="props.row">&larr;</span>
+                <span v-else>&uarr;</span>
             </slot>
         </div>
-        <div class="items-container" @wheel="handleScroll">
+        <div
+            :class="`items-container--${directionClass}`"
+            @wheel="handleScroll"
+        >
             <slot
                 name="items"
                 v-for="(item, index) in visibleItems"
@@ -15,8 +19,9 @@
             ></slot>
         </div>
         <div class="arrow" v-if="canScrollNext" @click="nextItems">
-            <slot name="down-arrow">
-                <span>&darr;</span>
+            <slot name="next-arrow">
+                <span v-if="props.row">&rarr;</span>
+                <span v-else>&darr;</span>
             </slot>
         </div>
     </div>
@@ -29,9 +34,11 @@ const props = withDefaults(
     defineProps<{
         initialIndex?: number
         visibleCount?: number
+        row?: boolean
         items: T[]
     }>(),
     {
+        row: false,
         initialIndex: 0,
         visibleCount: 5
     }
@@ -67,10 +74,25 @@ const handleScroll = (event: WheelEvent) => {
         prevItems()
     }
 }
+
+const directionClass = computed(() => {
+    if (props.row) return 'row'
+    return 'column'
+})
 </script>
 
 <style scoped>
-.base-switcher {
+.base-switcher--row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 200px;
+    width: 100%;
+}
+
+.base-switcher--column {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -82,7 +104,7 @@ const handleScroll = (event: WheelEvent) => {
 .arrow {
     cursor: pointer;
     margin: 10px 0;
-    color: var(--secondary-color);
+    color: #000;
     font-size: 24px;
     transition: color 0.3s;
 }
@@ -91,16 +113,20 @@ const handleScroll = (event: WheelEvent) => {
     color: darken(var(--secondary-color), 10%);
 }
 
-.items-container {
+.items-container--column {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
 }
 
-@media (max-width: 799px) {
-    .base-switcher {
-        scale: 0.7;
-    }
+.items-container--row {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
 }
 </style>

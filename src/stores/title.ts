@@ -21,8 +21,6 @@ export const useTitleStore = () => {
         titleObject.value = newTitleObject
     }
 
-    const designStore = useDesignStore()
-
     watch(
         () => route.path,
         (newPath) => {
@@ -33,14 +31,12 @@ export const useTitleStore = () => {
                     to: '/checkout',
                     showTotal: true
                 })
-                designStore.updateMotive()
             } else if (newPath === '/checkout') {
                 setTitle({
                     title: 'Checkout',
                     action: 'Back',
                     to: '/designer'
                 })
-                designStore.updateMotive()
             } else if (newPath === '/order-success') {
                 setTitle({
                     title: 'Order success',
