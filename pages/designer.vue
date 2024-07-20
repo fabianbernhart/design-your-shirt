@@ -3,7 +3,7 @@
         <div class="flex-item shirt-container--50">
             <TShirtDesigner></TShirtDesigner>
         </div>
-        <div class="flex-item switchers">
+        <div class="flex-item">
             <ColorSwitcher row></ColorSwitcher>
         </div>
         <div class="flex-item switchers">
@@ -44,7 +44,7 @@ const breakpoint = useBreakpoint()
 <style scoped>
 .flex-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     height: auto;
     width: 100vw;

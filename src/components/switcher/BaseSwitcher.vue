@@ -90,6 +90,7 @@ const directionClass = computed(() => {
     padding: 20px;
     border-radius: 10px;
     width: 100%;
+    max-height: 150px;
 }
 
 .base-switcher--column {
@@ -98,7 +99,7 @@ const directionClass = computed(() => {
     align-items: center;
     padding: 20px;
     border-radius: 10px;
-    max-width: 200px;
+    max-width: 150px;
 }
 
 .arrow {
@@ -110,7 +111,7 @@ const directionClass = computed(() => {
 }
 
 .arrow:hover {
-    color: darken(var(--secondary-color), 10%);
+    color: darken(#2d5825, 10%);
 }
 
 .items-container--column {
@@ -125,6 +126,5 @@ const directionClass = computed(() => {
     flex-direction: row;
     align-items: center;
     overflow: hidden;
-    overflow-x: scroll;
 }
 </style>

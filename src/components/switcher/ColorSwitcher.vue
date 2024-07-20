@@ -1,8 +1,9 @@
 <template>
-    <BaseControl :row="props.row" :items="colors" class="container">
+    <BaseControl :row="props.row" :items="colors">
         <template #items="{ item }">
             <div @click="setColor(item)">
                 <TShirtDesigner
+                    size="100px"
                     :colorItem="toRef(item)"
                     class="rounded-rectangle"
                     :style="[getBorderStyle(item)]"
@@ -46,9 +47,9 @@ const setColor = (newColor: Color | null) => {
 .rounded-rectangle {
     width: 100%;
     height: 100%;
-    margin: 5px 0;
+    margin: 3px 0;
     border-radius: 10px;
-    border: 2px solid none;
+    border: 5px solid none;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -61,27 +62,6 @@ const setColor = (newColor: Color | null) => {
         border-color 0.3s,
         box-shadow 0.3s;
 }
-
-.rounded-rectangle {
-    width: 100px;
-    height: 100px;
-    margin: 5px 0;
-    border-radius: 10px;
-    border: 2px solid none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-color);
-    font-size: 14px;
-    font-weight: bold;
-    transition:
-        transform 0.3s,
-        border-color 0.3s,
-        box-shadow 0.3s;
-}
-
-
 
 .rounded-rectangle:hover {
     border-color: #000;

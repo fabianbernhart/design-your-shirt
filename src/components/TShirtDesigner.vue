@@ -1,12 +1,12 @@
-<template class="svg-template">
+<template class="svg-template" :style="{ height: size, height: size }">
     <svg
         version="1.1"
         id="Ebene_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         viewBox="0 0 520 580"
-        width="600px"
-        height="600px"
+        :width="size"
+        :height="size"
     >
         <g class="body" :style="{ fill: colorRef?.color }">
             <path
@@ -200,7 +200,14 @@ const props = defineProps<{
         color: string
         price: number
     } | null>
+    size?: string
 }>()
+
+const size = ref('600px')
+
+if (props.size) {
+    size.value = props.size
+}
 
 let colorRef = props.colorItem ? props.colorItem : color
 
