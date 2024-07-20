@@ -64,7 +64,7 @@
 
 <script setup lang="ts">
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
-import { validation } from '@/src/stores/validation'
+import { validation } from '~/src/composable/validation'
 import { useForm } from 'vuestic-ui'
 import { useDesignStore } from '@/src/stores/design'
 

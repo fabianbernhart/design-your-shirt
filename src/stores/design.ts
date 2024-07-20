@@ -1,6 +1,5 @@
 // stores/design.js
 import { ref, computed } from 'vue'
-import { getActivePinia } from 'pinia'
 
 export type Motive = {
     name: string

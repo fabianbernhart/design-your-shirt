@@ -203,19 +203,34 @@ const props = defineProps<{
     size?: string
 }>()
 
-const size = ref('600px')
+const size = ref(props.size ?? '600px')
+let colorRef = color
 
-if (props.size) {
-    size.value = props.size
-}
-
-let colorRef = props.colorItem ? props.colorItem : color
-
-watch(props, (currentValue, oldValue) => {
+const updateColorRef = () => {
     if (props.colorItem) {
         colorRef = props.colorItem
     }
-})
+}
+
+watch(
+    () => props.size,
+    (newSize) => {
+        if (newSize) {
+            size.value = newSize
+        }
+    },
+    { immediate: true }
+)
+
+watch(
+    () => props.colorItem,
+    (newColorItem) => {
+        if (newColorItem) {
+            updateColorRef()
+        }
+    },
+    { immediate: true }
+)
 </script>
 
 <style scoped>

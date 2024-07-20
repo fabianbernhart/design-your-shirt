@@ -25,24 +25,24 @@
 
 <script setup lang="ts">
 import { useDesignStore } from '@/src/stores/design'
-import { useTitleStore } from '@/src/stores/title'
+import { useTitleStore } from '~/src/composable/title'
 
 const designStore = useDesignStore()
 const { totalPrice } = storeToRefs(designStore)
 
 const titleStore = useTitleStore()
 
+const title = titleStore.getTitle
+
 const navigateToNewPage = () => {
     navigateTo(title.value.to)
 }
-
-const title = computed(() => titleStore.titleObject.value)
 </script>
 
 <style scoped>
 .title {
-    font-size: 2rem;
-    color: greenyellow;
+    font-size: 3.25rem;
+    color: rgb(104, 129, 66);
 }
 
 .price {
@@ -52,12 +52,12 @@ const title = computed(() => titleStore.titleObject.value)
 @media (max-width: 550px) {
     .price {
         font-size: large;
-        margin-right: 0.5rem;
+        margin-right: 0.2rem;
         color: #000;
     }
     .title {
         font-size: larger;
-        color: greenyellow;
+        font-size: 1.3em;
     }
 }
 </style>
