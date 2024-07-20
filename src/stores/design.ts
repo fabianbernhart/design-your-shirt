@@ -14,8 +14,6 @@ export type Color = {
     price: number
 }
 
-const properties = ['--st0-color', '--st1-color', '--st2-color']
-
 export const useDesignStore = defineStore('designStore', () => {
     const color = ref<Color | null>(null)
     const motive = ref<Motive | null>(null)
@@ -29,29 +27,6 @@ export const useDesignStore = defineStore('designStore', () => {
         name: '',
         address: ''
     })
-
-    const updateColor = () => {
-        if (!color.value) return
-        if (!document) return
-
-        for (const property of properties) {
-            document.documentElement.style.setProperty(
-                property,
-                color.value.color
-            )
-        }
-    }
-
-    const updateMotive = () => {
-        if (!motive.value) return
-        if (!document) return
-
-        const imageElements = document.getElementsByClassName('optionalImg')
-
-        for (const imageElement of imageElements) {
-            imageElement.setAttribute('href', motive.value.img)
-        }
-    }
 
     const getColors = (): void => {
         useFetch<Color[]>('/api/colors')
@@ -70,7 +45,6 @@ export const useDesignStore = defineStore('designStore', () => {
 
                 if (!color.value) {
                     color.value = colors.value[0] || null
-                    updateColor()
                 }
             })
             .catch((err) => {
@@ -95,7 +69,6 @@ export const useDesignStore = defineStore('designStore', () => {
 
                 if (!motive.value) {
                     motive.value = motives.value[0] || null
-                    updateMotive()
                 }
             })
             .catch((err) => {
@@ -129,31 +102,31 @@ export const useDesignStore = defineStore('designStore', () => {
             })
     }
 
-    watch(
-        () => color.value?.price,
-        (newColorPrice) => {
-            if (!newColorPrice) return
-            colorPrice.value = newColorPrice
-        },
-        { immediate: true }
-    )
-
-    watch(
-        () => motive.value?.price,
-        (newMotivePrice) => {
-            if (!newMotivePrice) return
-            motivePrice.value = newMotivePrice
-        },
-        { immediate: true }
-    )
-
     const totalPrice = computed((): number => {
-        const result = motivePrice.value + colorPrice.value
+        if (!motive.value || !color.value) {
+            return 0
+        }
+
+        const result = motive.value.price + color.value.price
 
         const fixedResult = result.toFixed(2)
 
         return Number.parseFloat(fixedResult)
     })
+
+    const formatPrice = (number: number = 0): string => {
+        const convertedNumber: string = number.toString()
+        const parts = convertedNumber.split('.')
+
+        if (parts.length === 2) {
+            if (parts[1].length == 2) {
+                return `${parts[0]},${parts[1]}`
+            }
+
+            return `${parts[0]},${parts[1]}0`
+        }
+        return convertedNumber
+    }
 
     const $reset = () => {
         color.value = null
@@ -180,11 +153,9 @@ export const useDesignStore = defineStore('designStore', () => {
         colors,
         totalPrice,
         $reset,
-        updateColor,
-        changeImg: updateMotive,
-        updateMotive,
         getMotives,
         getColors,
-        createOrder
+        createOrder,
+        formatPrice
     }
 })

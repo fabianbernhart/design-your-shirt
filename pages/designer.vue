@@ -1,22 +1,24 @@
 <template>
     <div v-if="breakpoint.smDown">
-        <div class="flex-item shirt-container">
+        <div class="flex-item shirt-container--50">
             <TShirtDesigner></TShirtDesigner>
         </div>
+        <div class="flex-item">
+            <ColorSwitcher row></ColorSwitcher>
+        </div>
         <div class="flex-item switchers">
-            <ColorSwitcher></ColorSwitcher>
-            <MotiveSwitchers></MotiveSwitchers>
+            <MotiveSwitchers row></MotiveSwitchers>
         </div>
     </div>
 
     <div v-else class="flex-container">
-        <div class="flex-item color-switcher">
+        <div class="flex-item">
             <ColorSwitcher></ColorSwitcher>
         </div>
         <div class="flex-item shirt-container">
             <TShirtDesigner></TShirtDesigner>
         </div>
-        <div class="flex-item motive-switcher">
+        <div class="flex-item">
             <MotiveSwitchers></MotiveSwitchers>
         </div>
     </div>
@@ -29,15 +31,12 @@ import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
 import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
-const { colors, color } = storeToRefs(designStore)
+const { colors } = storeToRefs(designStore)
 
 if (colors.value.length == 0) {
     designStore.getColors()
     designStore.getMotives()
 }
-
-designStore.updateColor()
-designStore.updateMotive()
 
 const breakpoint = useBreakpoint()
 </script>
@@ -45,7 +44,7 @@ const breakpoint = useBreakpoint()
 <style scoped>
 .flex-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     height: auto;
     width: 100vw;
@@ -66,7 +65,14 @@ const breakpoint = useBreakpoint()
 .shirt-container {
     flex: 1;
     justify-content: center;
-    width: 60%; /* Adjust the width as needed */
+    width: 60%;
+    height: auto;
+}
+
+.shirt-container--50 {
+    flex: 1;
+    justify-content: center;
+    width: 50%;
     height: auto;
 }
 
@@ -79,13 +85,11 @@ const breakpoint = useBreakpoint()
 
 .switchers {
     align-items: center;
-    rotate: 90deg;
-    scale: 0.9;
 }
 
-@media screen and (max-width: 1016px) {
+@media screen and (max-width: 1030px) {
     .flex-container {
-        flex-direction: column;
+        flex-direction: row;
         align-items: stretch;
         height: auto;
     }
@@ -93,12 +97,7 @@ const breakpoint = useBreakpoint()
     .flex-item {
         width: auto;
         height: auto;
-    }
-}
-
-@media (max-width: 400px) {
-    .switchers {
-        scale: 0.7;
+        flex-direction: row;
     }
 }
 </style>

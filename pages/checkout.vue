@@ -6,19 +6,11 @@
                 <div class="description">
                     <p>
                         Motive:
-                        {{
-                            designStore.motive
-                                ? designStore.motive.name
-                                : 'Not Selected'
-                        }}
+                        {{ motive ? motive.name : 'Not Selected' }}
                     </p>
                     <p>
                         Shirt:
-                        {{
-                            designStore.color
-                                ? designStore.color.name
-                                : 'Not selected'
-                        }}
+                        {{ color ? color.name : 'Not selected' }}
                     </p>
                 </div>
             </div>
@@ -26,14 +18,23 @@
                 <h2>Order Data</h2>
                 <div class="order-data">
                     <p>
-                        Motive: <span>{{ designStore.motivePrice }} €</span>
+                        Motive:
+                        <span
+                            >{{
+                                formatPrice(designStore.motive?.price)
+                            }}
+                            €</span
+                        >
                     </p>
                     <p>
-                        Shirt: <span>{{ designStore.colorPrice }} €</span>
+                        Shirt:
+                        <span
+                            >{{ formatPrice(designStore.color?.price) }} €</span
+                        >
                     </p>
                 </div>
                 <hr />
-                <p>Total: {{ designStore.totalPrice }} €</p>
+                <p>Total: {{ formatPrice(designStore.totalPrice) }} €</p>
             </div>
             <div class="flex-item card">
                 <h2>Personal Data</h2>
@@ -56,7 +57,7 @@
         </div>
 
         <VaButton @click="buy()" color="success" :disabled="!isValid">
-            Buy ({{ designStore.totalPrice }} €)</VaButton
+            Buy ({{ formatPrice(17.1) }} €)</VaButton
         >
     </div>
 </template>
@@ -69,9 +70,9 @@ import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
 
-const { personalData, color, createOrder, motive, updateMotive } = designStore
+const { personalData, createOrder, formatPrice } = designStore
 
-updateMotive()
+const { motive, color } = storeToRefs(designStore)
 
 if (!color || !motive) {
     navigateTo('/designer')
