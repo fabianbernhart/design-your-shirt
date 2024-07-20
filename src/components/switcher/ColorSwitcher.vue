@@ -44,7 +44,26 @@ const setColor = (newColor: Color | null) => {
 
 <style scoped>
 .rounded-rectangle {
-    width: fit-content;
+    width: 100%;
+    height: 100%;
+    margin: 5px 0;
+    border-radius: 10px;
+    border: 2px solid none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: bold;
+    transition:
+        transform 0.3s,
+        border-color 0.3s,
+        box-shadow 0.3s;
+}
+
+.rounded-rectangle {
+    width: 100px;
     height: 100px;
     margin: 5px 0;
     border-radius: 10px;
@@ -62,20 +81,10 @@ const setColor = (newColor: Color | null) => {
         box-shadow 0.3s;
 }
 
+
+
 .rounded-rectangle:hover {
-    border-color: #000; /* Change border color on hover */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
-}
-
-.color-circle.active {
-    border: 3px solid var(--secondary-color);
-    padding: 5px;
-}
-
-@media screen and (max-width: 1030px) {
-    .container {
-        height: clamp(4vh, 10vh, 20vh);
-        width: 100%;
-    }
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>

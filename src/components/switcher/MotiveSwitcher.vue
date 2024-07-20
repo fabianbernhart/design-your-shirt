@@ -43,10 +43,10 @@ const setMotive = (newMotive: Motive) => {
 
 <style scoped>
 .rounded-rectangle {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     margin: 5px 0;
-    border-radius: 10px; /* Adjust border-radius to control the roundness */
+    border-radius: 10px;
     border: 2px solid none;
     cursor: pointer;
     display: flex;
@@ -62,12 +62,7 @@ const setMotive = (newMotive: Motive) => {
 }
 
 .rounded-rectangle:hover {
-    border-color: #000; /* Change border color on hover */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Apply box-shadow on hover */
-}
-
-.color-circle.active {
-    border: 3px solid #000;
-    padding: 5px;
+    border-color: #000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>

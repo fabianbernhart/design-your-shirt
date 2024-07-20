@@ -86,9 +86,9 @@ const directionClass = computed(() => {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     padding: 20px;
     border-radius: 10px;
-    min-width: 200px;
     width: 100%;
 }
 
@@ -114,7 +114,6 @@ const directionClass = computed(() => {
 }
 
 .items-container--column {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -122,11 +121,10 @@ const directionClass = computed(() => {
 }
 
 .items-container--row {
-    flex: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
     overflow: hidden;
-    width: 100%;
+    overflow-x: scroll;
 }
 </style>
