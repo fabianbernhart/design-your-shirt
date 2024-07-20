@@ -6,6 +6,7 @@
                     class="rounded-rectangle"
                     :style="getItemClass(item)"
                     :src="item.img"
+                    :alt="item.name"
                 />
             </div>
         </template>

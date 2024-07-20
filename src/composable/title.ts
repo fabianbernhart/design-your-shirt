@@ -9,9 +9,9 @@ export const useTitleStore = () => {
     const route = useRoute()
 
     const titleObject = ref<TitleObjectType>({
-        title: 'null',
-        action: 'null',
-        to: 'null',
+        title: null,
+        action: null,
+        to: null,
         showTotal: false
     })
 
