@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@nuxtjs/vuetify": "^1.12.3",
-    "@pinia/nuxt": "^0.5.1",
+    "@pinia/nuxt": "^0.10.1",
     "@vuestic/nuxt": "^1.0.20",
     "hammerjs": "^2.0.8",
     "pinia": "^2.3.1",
