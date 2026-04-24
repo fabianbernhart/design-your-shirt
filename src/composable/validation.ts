@@ -1,4 +1,4 @@
-export const useValidationStore = () => {
+export const useFormValidation = () => {
     const requiredRules = (key: string = 'Field') => {
         return (value: string) =>
             (value && value.length > 0) || `${key} is required`
@@ -22,7 +22,3 @@ export const useValidationStore = () => {
         notIncludes
     }
 }
-
-const validation = useValidationStore()
-
-export { validation }
