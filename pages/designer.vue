@@ -1,7 +1,7 @@
 <template>
     <div v-if="breakpoint.smDown">
         <div class="flex-item shirt-container--50">
-            <TShirtDesigner></TShirtDesigner>
+            <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
         </div>
         <div class="flex-item">
             <ColorSwitcher row></ColorSwitcher>
@@ -16,7 +16,7 @@
             <ColorSwitcher></ColorSwitcher>
         </div>
         <div class="flex-item shirt-container">
-            <TShirtDesigner></TShirtDesigner>
+            <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
         </div>
         <div class="flex-item">
             <MotiveSwitchers></MotiveSwitchers>
@@ -31,7 +31,14 @@ import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
 import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
-const { colors } = storeToRefs(designStore)
+const { colors, color, motive } = storeToRefs(designStore)
+
+const shirtBinding = computed(() => {
+    return {
+        color: color.value,
+        motive: motive.value
+    }
+})
 
 if (colors.value.length == 0) {
     designStore.getColors()

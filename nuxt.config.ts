@@ -17,6 +17,6 @@ export default defineNuxtConfig({
         storesDirs: ['src/stores/**']
     },
 
-    devtools: { enabled: true },
+    devtools: { enabled: false },
     compatibilityDate: '2024-07-17'
 })

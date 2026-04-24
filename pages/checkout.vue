@@ -2,7 +2,7 @@
     <div class="container">
         <div class="content">
             <div class="flex-item">
-                <TShirtDesigner class="shirt" />
+                <TShirtDesigner :color="color" :motive="motive" class="shirt" />
                 <div class="description">
                     <p>
                         Motive:

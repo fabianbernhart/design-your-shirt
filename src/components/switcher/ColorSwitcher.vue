@@ -4,7 +4,7 @@
             <div @click="setColor(item)">
                 <TShirtDesigner
                     size="100px"
-                    :colorItem="toRef(item)"
+                    :color="item"
                     class="rounded-rectangle"
                     :style="[getBorderStyle(item)]"
                 ></TShirtDesigner>
@@ -38,7 +38,7 @@ const getBorderStyle = (color: Color): { border: string } | {} => {
     return {}
 }
 
-const setColor = (newColor: Color | null) => {
+const setColor = (newColor: Color) => {
     color.value = newColor
 }
 </script>

@@ -8,7 +8,7 @@
         :width="size"
         :height="size"
     >
-        <g class="body" :style="{ fill: colorRef?.color }">
+        <g class="body" :style="{ fill: props.color?.color }">
             <path
                 d="M447.3,61.7C428.6,51.7,324.9,10,324.9,10S308.3,30.5,260,30.5S195.1,10,195.1,10S91.4,51.7,72.7,61.7
                 S5,212.5,5,212.5s5,4,10.4,9.4c5.3,5.3,17.7,9.4,30.4,14.7c12.7,5.3,13.7,8,23.7,14c10,6,18.7,3.3,20.7,0.7
@@ -19,7 +19,7 @@
             />
         </g>
 
-        <g class="inside" :style="{ fill: colorRef?.color }">
+        <g class="inside" :style="{ fill: props.color?.color }">
             <path
                 d="M258.6,74.9c56.1,0,64.9-63.4,64.9-63.4v0c-4.9,4.7-23.1,19-63.5,19c-48.3,0-64.9-20.4-64.9-20.4
 	S202.5,74.9,258.6,74.9z"
@@ -38,7 +38,7 @@
             />
         </g>
 
-        <g class="details" :style="{ fill: colorRef?.color }">
+        <g class="details" :style="{ fill: props.color?.color }">
             <path
                 class="st2"
                 d="M356.5,459.3c8.6,4.9,30.7,14.1,59.5,11.5c0-7.2-0.1-12.3-0.3-13.7c-0.7-6.7-6-11.4-3.3-16
@@ -188,45 +188,21 @@
 </template>
 
 <script setup lang="ts">
-import { useDesignStore } from '@/src/stores/design'
-
-const designStore = useDesignStore()
-
-const { color, motive } = storeToRefs(designStore)
+import { type Color, type Motive } from '@/src/stores/design'
 
 const props = defineProps<{
-    colorItem?: globalThis.Ref<{
-        name: string
-        color: string
-        price: number
-    } | null>
+    motive?: Motive
+    color?: Color
     size?: string
 }>()
 
 const size = ref(props.size ?? '600px')
-let colorRef = color
-
-const updateColorRef = () => {
-    if (props.colorItem) {
-        colorRef = props.colorItem
-    }
-}
 
 watch(
     () => props.size,
     (newSize) => {
         if (newSize) {
             size.value = newSize
-        }
-    },
-    { immediate: true }
-)
-
-watch(
-    () => props.colorItem,
-    (newColorItem) => {
-        if (newColorItem) {
-            updateColorRef()
         }
     },
     { immediate: true }

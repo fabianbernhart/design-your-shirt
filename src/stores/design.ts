@@ -14,8 +14,8 @@ export type Color = {
 }
 
 export const useDesignStore = defineStore('designStore', () => {
-    const color = ref<Color | null>(null)
-    const motive = ref<Motive | null>(null)
+    const color = ref<Color>()
+    const motive = ref<Motive>()
     const motives = ref<Motive[]>([])
     const colors = ref<Color[]>([])
 
@@ -128,8 +128,8 @@ export const useDesignStore = defineStore('designStore', () => {
     }
 
     const $reset = () => {
-        color.value = null
-        motive.value = null
+        color.value = undefined
+        motive.value = undefined
         motives.value = []
         colors.value = []
 
