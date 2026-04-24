@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import TShirtDesigner from '../TShirtDesigner.vue'
-import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
+import TShirtDesigner from '~/src/components/TShirtDesigner.vue'
+import BaseControl from '~/src/components/switcher/BaseSwitcher.vue'
 import { useDesignStore } from '~/stores/design'
 import type { Color } from '~/stores/design'
 

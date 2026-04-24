@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
+import BaseControl from '~/src/components/switcher/BaseSwitcher.vue'
 import { useDesignStore } from '~/stores/design'
 import type { Motive } from '~/stores/design'
 

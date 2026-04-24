@@ -25,9 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import ColorSwitcher from '@/src/components/switcher/ColorSwitcher.vue'
-import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
-import MotiveSwitchers from '@/src/components/switcher/MotiveSwitcher.vue'
+import ColorSwitcher from '~/src/components/switcher/ColorSwitcher.vue'
+import TShirtDesigner from '~/src/components/TShirtDesigner.vue'
+import MotiveSwitchers from '~/src/components/switcher/MotiveSwitcher.vue'
 
 const designStore = useDesignStore()
 const { colors, color, motive } = storeToRefs(designStore)

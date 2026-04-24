@@ -50,26 +50,27 @@
                         class="personal-data-input"
                         v-model="personalData.address"
                         :rules="addressRules"
+                        :error-messages="[]"
                         label="Address"
                     />
                 </VaForm>
             </div>
         </div>
 
-        <VaButton @click="buy()" color="success" :disabled="!isValid">
+        <VaButton @click="buy()" color="success">
             Buy ({{ formatPrice(17.1) }} €)</VaButton
         >
     </div>
 </template>
 
 <script setup lang="ts">
-import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
-import { validation } from '~/src/composable/validation'
+import TShirtDesigner from '~/src/components/TShirtDesigner.vue'
+import { useFormValidation } from '~/src/composable/validation'
 import { useForm } from 'vuestic-ui'
 
 const designStore = useDesignStore()
 
-const { personalData, createOrder, formatPrice } = designStore
+const { personalData, formatPrice } = designStore
 
 const { motive, color } = storeToRefs(designStore)
 
@@ -77,7 +78,7 @@ if (!color || !motive) {
     navigateTo('/designer')
 }
 
-const { maxLengthRules, notIncludes, requiredRules } = validation
+const { maxLengthRules, notIncludes, requiredRules } = useFormValidation()
 const { isValid } = useForm('formRef')
 
 const nameRules = [
@@ -87,6 +88,26 @@ const nameRules = [
 ]
 
 const addressRules = [requiredRules('Address')]
+
+const errors = ref({
+    name: undefined,
+    address: undefined
+})
+
+const createOrder = async (order: { name: string; address: string }) => {
+    const { data, error } = await useFetch('/api/order', {
+        method: 'post',
+        body: {
+            name: order.name,
+            address: order.address
+        }
+    })
+
+    if (error.value) {
+        console.log(error.value)
+    }
+}
+
 const buy = () => {
     createOrder(designStore.personalData)
 }
