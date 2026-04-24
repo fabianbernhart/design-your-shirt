@@ -57,7 +57,7 @@
             </div>
         </div>
         <VaButton @click="buy()" :disabled="isValid" color="success">
-            Buy ({{ formatPrice(17.1) }} €)</VaButton
+            Buy ({{ formatPrice(designStore.totalPrice) }} €)</VaButton
         >
     </div>
 </template>
