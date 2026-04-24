@@ -9,7 +9,7 @@
             <VaNavbarItem textColor="primary">
                 <ClientOnly>
                     <span v-if="title.showTotal" class="price"
-                        >{{ totalPrice }} €</span
+                        >{{ totalPrice.toFixed(2) }} €</span
                     >
                 </ClientOnly>
 
