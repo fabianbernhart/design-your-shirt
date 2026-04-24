@@ -10,8 +10,6 @@
 </template>
 
 <script setup>
-import { useDesignStore } from '@/src/stores/design'
-
 const designStore = useDesignStore()
 
 const { personalData } = designStore

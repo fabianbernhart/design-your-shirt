@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { useDesignStore } from '@/src/stores/design'
 import { useTitleStore } from '~/src/composable/title'
 
 const designStore = useDesignStore()

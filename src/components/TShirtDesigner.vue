@@ -188,8 +188,6 @@
 </template>
 
 <script setup lang="ts">
-import { type Color, type Motive } from '@/src/stores/design'
-
 const props = defineProps<{
     motive?: Motive
     color?: Color

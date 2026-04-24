@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { useDesignStore } from '~/src/stores/design'
-import type { Motive } from '~/src/stores/design'
+import { useDesignStore } from '~/stores/design'
+import type { Motive } from '~/stores/design'
 
 const designStore = useDesignStore()
 const { motives, motive } = storeToRefs(designStore)

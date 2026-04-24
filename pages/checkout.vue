@@ -66,7 +66,6 @@
 import TShirtDesigner from '@/src/components/TShirtDesigner.vue'
 import { validation } from '~/src/composable/validation'
 import { useForm } from 'vuestic-ui'
-import { useDesignStore } from '@/src/stores/design'
 
 const designStore = useDesignStore()
 

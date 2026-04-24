@@ -16,8 +16,8 @@
 <script setup lang="ts">
 import TShirtDesigner from '../TShirtDesigner.vue'
 import BaseControl from '@/src/components/switcher/BaseSwitcher.vue'
-import { useDesignStore } from '@/src/stores/design'
-import type { Color } from '@/src/stores/design'
+import { useDesignStore } from '~/stores/design'
+import type { Color } from '~/stores/design'
 
 const designStore = useDesignStore()
 const { colors, color } = storeToRefs(designStore)

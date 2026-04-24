@@ -13,10 +13,6 @@ export default defineNuxtConfig({
         '@pinia/nuxt'
     ],
 
-    pinia: {
-        storesDirs: ['src/stores/**']
-    },
-
     devtools: { enabled: false },
     compatibilityDate: '2024-07-17'
 })
