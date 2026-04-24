@@ -6,12 +6,7 @@ export default defineNuxtConfig({
             meta: [{}]
         }
     },
-    modules: [
-        '@nuxtjs/tailwindcss',
-        '@vuestic/nuxt',
-        '@nuxt/test-utils/module',
-        '@pinia/nuxt'
-    ],
+    modules: ['@nuxtjs/tailwindcss', '@vuestic/nuxt', '@pinia/nuxt'],
 
     devtools: { enabled: false },
     compatibilityDate: '2024-07-17'

@@ -1,12 +1,12 @@
 <template>
-    <VaNavbar color="#shadow" class="title">
+    <VaNavbar>
         <template #left>
             <VaNavbarItem>
                 <span class="title">{{ title.title }}</span>
             </VaNavbarItem>
         </template>
         <template #right>
-            <VaNavbarItem textColor="primary">
+            <VaNavbarItem>
                 <ClientOnly>
                     <span v-if="title.showTotal" class="price"
                         >{{ totalPrice.toFixed(2) }} €</span
@@ -39,16 +39,25 @@ const navigateToNewPage = () => {
 </script>
 
 <style scoped>
-.title {
+.text {
     font-size: 3.25rem;
-    color: rgb(104, 129, 66);
+}
+
+.title {
+    @apply text;
+    color: rgb(129, 180, 51);
 }
 
 .price {
+    @apply text;
     margin-right: 2rem;
     color: #000;
 }
 @media (max-width: 550px) {
+    .text {
+        font-size: 3.25rem;
+    }
+
     .price {
         font-size: large;
         margin-right: 0.2rem;
