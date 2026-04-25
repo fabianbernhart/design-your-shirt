@@ -43,7 +43,7 @@ export const useDesignStore = defineStore('designStore', () => {
                 colors.value = data.value
 
                 if (!color.value) {
-                    color.value = colors.value[0] || null
+                    color.value = colors.value[0]
                 }
             })
             .catch((err) => {
@@ -67,7 +67,7 @@ export const useDesignStore = defineStore('designStore', () => {
                 motives.value = data.value
 
                 if (!motive.value) {
-                    motive.value = motives.value[0] || null
+                    motive.value = motives.value[0]
                 }
             })
             .catch((err) => {
@@ -114,17 +114,7 @@ export const useDesignStore = defineStore('designStore', () => {
     })
 
     const formatPrice = (number: number = 0): string => {
-        const convertedNumber: string = number.toString()
-        const parts = convertedNumber.split('.')
-
-        if (parts.length === 2) {
-            if (parts[1].length == 2) {
-                return `${parts[0]},${parts[1]}`
-            }
-
-            return `${parts[0]},${parts[1]}0`
-        }
-        return convertedNumber
+        return number.toFixed(2)
     }
 
     const $reset = () => {
