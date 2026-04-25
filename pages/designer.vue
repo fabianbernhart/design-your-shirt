@@ -35,6 +35,7 @@ const shirtBinding = computed(() => {
     }
 })
 
+// TODO: fix do not refetch colors and motives on new product
 if (colors.value.length == 0) {
     designStore.getColors()
     designStore.getMotives()
