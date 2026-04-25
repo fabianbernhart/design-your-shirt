@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import TShirtDesigner from '~/src/components/TShirtDesigner.vue'
-import { useFormValidation } from '~/src/composable/validation'
 import type { ValidationError } from '~/shared/types'
 
 const designStore = useDesignStore()
