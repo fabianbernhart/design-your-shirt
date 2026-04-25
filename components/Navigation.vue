@@ -24,8 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { useTitleStore } from '~/src/composable/title'
-
 const designStore = useDesignStore()
 const { totalPrice } = storeToRefs(designStore)
 
