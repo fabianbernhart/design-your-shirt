@@ -1,3 +1,5 @@
+import { ValidationError } from '~/shared/types'
+
 type requestBodyType = {
     address: string
     name: string
@@ -36,7 +38,7 @@ function validateRequestBody(body: requestBodyType) {
             message: 'The given data was invalid.',
             statusText: 'Unprocessable',
             errors
-        }
+        } as ValidationError
     }
 }
 

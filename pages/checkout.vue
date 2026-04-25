@@ -38,25 +38,27 @@
             </div>
             <div class="flex-item card">
                 <h2>Personal Data</h2>
-                <VaForm ref="formRef">
+                <VaForm>
                     <VaInput
                         class="personal-data-input"
                         v-model="personalData.name"
-                        :rules="nameRules"
+                        :error="(errors.name ?? []).length > 0"
+                        :error-messages="errors.name"
                         label="Name"
                         :autofocus="true"
                     />
                     <VaInput
+                        immediate-validation
                         class="personal-data-input"
+                        :error="(errors.address ?? []).length > 0"
                         v-model="personalData.address"
-                        :rules="addressRules"
-                        :error-messages="[]"
+                        :error-messages="errors.address"
                         label="Address"
                     />
                 </VaForm>
             </div>
         </div>
-        <VaButton @click="buy()" :disabled="!isValid" color="success">
+        <VaButton @click="buy()" color="success">
             Buy ({{ formatPrice(designStore.totalPrice) }} €)</VaButton
         >
     </div>
@@ -65,7 +67,7 @@
 <script setup lang="ts">
 import TShirtDesigner from '~/src/components/TShirtDesigner.vue'
 import { useFormValidation } from '~/src/composable/validation'
-import { useForm } from 'vuestic-ui'
+import type { ValidationError } from '~/shared/types'
 
 const designStore = useDesignStore()
 
@@ -77,33 +79,30 @@ if (!color || !motive) {
     navigateTo('/designer')
 }
 
-const { maxLengthRules, notIncludes, requiredRules } = useFormValidation()
-const { isValid } = useForm('formRef')
-
-const nameRules = [
-    requiredRules('Name'),
-    maxLengthRules(14, 'Name'),
-    notIncludes('_', 'Name')
-]
-
-const addressRules = [requiredRules('Address')]
-
-const errors = ref({
-    name: undefined,
-    address: undefined
+const errors = ref<ValidationError['errors']>({
+    name: [],
+    address: []
 })
 
-const createOrder = async (order: { name: string; address: string }) => {
-    const { data, error } = await useFetch('/api/order', {
-        method: 'post',
-        body: {
-            name: order.name,
-            address: order.address
-        }
-    })
+type Order = { name: string; address: string }
 
-    if (error.value) {
-        console.log(error.value)
+const createOrder = async (order: Order) => {
+    try {
+        const resp: { success: boolean } = await $fetch('/api/order', {
+            method: 'POST',
+            body: order
+        })
+
+        if (resp.success) {
+            errors.value = { name: [], address: [] }
+            navigateTo('/order-success')
+        }
+    } catch (err: any) {
+        const error = err?.data as ValidationError | undefined
+
+        if (error?.errors) {
+            errors.value = error.errors
+        }
     }
 }
 
