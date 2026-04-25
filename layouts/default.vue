@@ -1,12 +1,10 @@
 <template>
     <div>
-        <navigation></navigation>
+        <Navigation></Navigation>
         <slot></slot>
     </div>
 </template>
 
-<script lang="ts" setup>
-import Navigation from '~/src/components/Navigation.vue'
-</script>
+<script lang="ts" setup></script>
 
 <style scoped></style>
