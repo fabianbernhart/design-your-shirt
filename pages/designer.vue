@@ -4,29 +4,51 @@
             <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
         </div>
         <div class="flex-item">
-            <ColorSwitcher row></ColorSwitcher>
+            <ColorSwitcher
+                :colors="colors"
+                @change="onUpdateColor"
+                row
+            ></ColorSwitcher>
         </div>
         <div class="flex-item switchers">
-            <MotiveSwitcher row></MotiveSwitcher>
+            <MotiveSwitcher
+                :motives="motives"
+                @change="onUpdateMotive"
+                row
+            ></MotiveSwitcher>
         </div>
     </div>
 
     <div v-else class="flex-container">
         <div class="flex-item">
-            <ColorSwitcher></ColorSwitcher>
+            <ColorSwitcher
+                :colors="colors"
+                @change="onUpdateColor"
+            ></ColorSwitcher>
         </div>
         <div class="flex-item shirt-container">
             <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
         </div>
         <div class="flex-item">
-            <MotiveSwitcher></MotiveSwitcher>
+            <MotiveSwitcher
+                :motives="motives"
+                @change="onUpdateMotive"
+            ></MotiveSwitcher>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 const designStore = useDesignStore()
-const { colors, color, motive } = storeToRefs(designStore)
+const { colors, color, motive, motives } = storeToRefs(designStore)
+
+const onUpdateMotive = (newMotive: Motive) => {
+    motive.value = newMotive
+}
+
+const onUpdateColor = (newColor: Color) => {
+    color.value = newColor
+}
 
 const shirtBinding = computed(() => {
     return {

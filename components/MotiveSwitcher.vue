@@ -1,5 +1,5 @@
 <template style="border: 1px red solid">
-    <BaseControl :row="props.row" :items="motives">
+    <BaseSwitcher :row="props.row" :items="motives">
         <template #items="{ item }">
             <div @click="setMotive(item)">
                 <img
@@ -10,25 +10,26 @@
                 />
             </div>
         </template>
-    </BaseControl>
+    </BaseSwitcher>
 </template>
 
 <script setup lang="ts">
-import BaseControl from '~/components/BaseSwitcher.vue'
-import { useDesignStore } from '~/stores/design'
-import type { Motive } from '~/stores/design'
-
 const designStore = useDesignStore()
-const { motives, motive } = storeToRefs(designStore)
+const { motives } = storeToRefs(designStore)
 
 const props = withDefaults(
     defineProps<{
+        motives: Motive[]
         row?: boolean
     }>(),
     {
         row: false
     }
 )
+
+const emit = defineEmits<{
+    (e: 'change', motive: Motive): void
+}>()
 
 const getItemClass = (motive: Motive): { border: string } | {} => {
     if (designStore.motive == motive) {
@@ -38,7 +39,7 @@ const getItemClass = (motive: Motive): { border: string } | {} => {
 }
 
 const setMotive = (newMotive: Motive) => {
-    motive.value = newMotive
+    emit('change', newMotive)
 }
 </script>
 

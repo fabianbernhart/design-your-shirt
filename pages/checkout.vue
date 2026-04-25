@@ -2,7 +2,7 @@
     <div class="container">
         <div class="content">
             <div class="flex-item">
-                <TShirtDesigner :color="color" :motive="motive" class="shirt" />
+                <TShirtDesigner v-bind="shirtBinding" class="shirt" />
                 <div class="description">
                     <p>
                         Motive:
@@ -19,22 +19,15 @@
                 <div class="order-data">
                     <p>
                         Motive:
-                        <span
-                            >{{
-                                formatPrice(designStore.motive?.price)
-                            }}
-                            €</span
-                        >
+                        <span>{{ totalPrice.toFixed(2) }} €</span>
                     </p>
                     <p>
                         Shirt:
-                        <span
-                            >{{ formatPrice(designStore.color?.price) }} €</span
-                        >
+                        <span>{{ totalPrice.toFixed(2) }} €</span>
                     </p>
                 </div>
                 <hr />
-                <p>Total: {{ formatPrice(designStore.totalPrice) }} €</p>
+                <p>Total: {{ totalPrice.toFixed(2) }} €</p>
             </div>
             <div class="flex-item card">
                 <h2>Personal Data</h2>
@@ -59,7 +52,7 @@
             </div>
         </div>
         <VaButton @click="buy()" color="success">
-            Buy ({{ formatPrice(designStore.totalPrice) }} €)</VaButton
+            Buy ({{ totalPrice.toFixed(2) }} €)</VaButton
         >
     </div>
 </template>
@@ -69,9 +62,14 @@ import type { ValidationError } from '~/shared/types'
 
 const designStore = useDesignStore()
 
-const { personalData, formatPrice } = designStore
+const { motive, color, personalData, totalPrice } = storeToRefs(designStore)
 
-const { motive, color } = storeToRefs(designStore)
+const shirtBinding = computed(() => {
+    return {
+        color: color.value,
+        motive: motive.value
+    }
+})
 
 if (!color || !motive) {
     navigateTo('/designer')

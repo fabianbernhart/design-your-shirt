@@ -1,5 +1,5 @@
 <template>
-    <BaseControl :row="props.row" :items="colors">
+    <BaseSwitcher :row="props.row" :items="colors">
         <template #items="{ item }">
             <div @click="setColor(item)">
                 <TShirtDesigner
@@ -10,26 +10,26 @@
                 ></TShirtDesigner>
             </div>
         </template>
-    </BaseControl>
+    </BaseSwitcher>
 </template>
 
 <script setup lang="ts">
-import TShirtDesigner from '~/components/TShirtDesigner.vue'
-import BaseControl from '~/components/BaseSwitcher.vue'
-import { useDesignStore } from '~/stores/design'
-import type { Color } from '~/stores/design'
-
 const designStore = useDesignStore()
 const { colors, color } = storeToRefs(designStore)
 
 const props = withDefaults(
     defineProps<{
         row?: boolean
+        colors: Color[]
     }>(),
     {
         row: false
     }
 )
+
+const emit = defineEmits<{
+    (e: 'change', motive: Color): void
+}>()
 
 const getBorderStyle = (color: Color): { border: string } | {} => {
     if (designStore.color == color) {
@@ -39,7 +39,7 @@ const getBorderStyle = (color: Color): { border: string } | {} => {
 }
 
 const setColor = (newColor: Color) => {
-    color.value = newColor
+    emit('change', newColor)
 }
 </script>
 

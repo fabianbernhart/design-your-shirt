@@ -11,6 +11,10 @@ body {
     color: black;
 }
 
+.flex {
+    display: flex;
+}
+
 .full-width-container {
     width: 100vw;
     padding: 0;
