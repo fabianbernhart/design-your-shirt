@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "0.5.1",
-    "@vuestic/nuxt": "1.0.20",
+    "@vuestic/nuxt": "1.0.21",
     "pinia": "^2.3.1",
     "prettier": "^3.5.3"
   }
