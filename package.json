@@ -9,24 +9,21 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write **.{ts,vue}"
+    "format": "prettier --write **.{ts,vue}",
+    "knip": "knip"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.5.0",
-    "@nuxt/devtools": "3.2.4",
     "@nuxtjs/tailwindcss": "^6.13.1",
-    "@vue/test-utils": "^2.4.6",
-    "eslint": "^9.34.0",
+    "@types/node": "^25.6.0",
+    "knip": "^6.12.0",
     "nuxt": "^3.21.2",
-    "playwright-core": "^1.45.1"
-  },
-  "overrides": {
-    "vue": "latest"
+    "typescript": "^6.0.3",
+    "prettier": "^3.5.3"
   },
   "dependencies": {
     "@pinia/nuxt": "0.5.1",
     "@vuestic/nuxt": "1.0.20",
-    "pinia": "^2.3.1",
-    "prettier": "^3.5.3"
+    "vue": "3.5.34"
   }
 }
