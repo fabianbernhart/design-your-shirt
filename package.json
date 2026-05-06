@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "0.5.1",
-    "@vuestic/nuxt": "1.0.20",
+    "@vuestic/nuxt": "1.0.21",
     "vue": "3.5.34"
   }
 }
