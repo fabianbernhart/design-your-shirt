@@ -1,22 +1,17 @@
 <template>
-    <BaseSwitcher :row="props.row" :items="colors">
+    <BaseSwitcher @select="setColor" :row="props.row" :items="colors">
         <template #items="{ item }">
-            <div @click="setColor(item)">
-                <TShirtDesigner
-                    size="100px"
-                    :color="item"
-                    class="rounded-rectangle"
-                    :style="[getBorderStyle(item)]"
-                ></TShirtDesigner>
-            </div>
+            <TShirtDesigner
+                size="100px"
+                :color="item"
+                :style="[getBorderStyle(item)]"
+            ></TShirtDesigner>
         </template>
     </BaseSwitcher>
 </template>
 
 <script setup lang="ts">
-const designStore = useDesignStore()
-const { colors, color } = storeToRefs(designStore)
-
+const model = defineModel<undefined | Color>({ required: true })
 const props = withDefaults(
     defineProps<{
         row?: boolean
@@ -32,39 +27,13 @@ const emit = defineEmits<{
 }>()
 
 const getBorderStyle = (color: Color): { border: string } | {} => {
-    if (designStore.color == color) {
+    if (model.value == color) {
         return { border: '5px solid #000' }
     }
     return {}
 }
 
 const setColor = (newColor: Color) => {
-    emit('change', newColor)
+    model.value = newColor
 }
 </script>
-
-<style scoped>
-.rounded-rectangle {
-    width: 100%;
-    height: 100%;
-    margin: 3px 0;
-    border-radius: 10px;
-    border: 5px solid none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-color);
-    font-size: 14px;
-    font-weight: bold;
-    transition:
-        transform 0.3s,
-        border-color 0.3s,
-        box-shadow 0.3s;
-}
-
-.rounded-rectangle:hover {
-    border-color: #000;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-</style>

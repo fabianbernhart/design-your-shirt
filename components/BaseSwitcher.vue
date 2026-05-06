@@ -10,13 +10,14 @@
             :class="`items-container--${directionClass}`"
             @wheel="handleScroll"
         >
-            <slot
-                name="items"
-                v-for="(item, index) in visibleItems"
-                :item="item"
-                :index="index"
-                :key="index"
-            ></slot>
+            <template v-for="(item, index) in visibleItems" :key="index">
+                <button
+                    @click="emit('select', item)"
+                    class="rounded-full p-0.5"
+                >
+                    <slot name="items" :item="item" :index="index"></slot>
+                </button>
+            </template>
         </div>
         <div class="arrow" v-if="canScrollNext" @click="nextItems">
             <slot name="next-arrow">
@@ -29,6 +30,10 @@
 
 <script setup lang="ts" generic="T">
 import { ref, computed } from 'vue'
+
+const emit = defineEmits<{
+    (e: 'select', item: T): void
+}>()
 
 const props = withDefaults(
     defineProps<{

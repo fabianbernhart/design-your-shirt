@@ -2,8 +2,8 @@
     <NuxtLayout class="max-w-full" name="wrapper">
         <template #left>
             <ColorSwitcher
+                v-model="color"
                 :colors="colors"
-                @change="onUpdateColor"
                 :row="breakpoint.smDown"
             ></ColorSwitcher>
         </template>
@@ -14,8 +14,8 @@
 
         <template #right>
             <MotiveSwitcher
+                v-model="motive"
                 :motives="motives"
-                @change="onUpdateMotive"
                 :row="breakpoint.smDown"
             ></MotiveSwitcher>
         </template>
