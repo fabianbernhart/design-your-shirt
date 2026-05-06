@@ -1,41 +1,25 @@
 <template>
-    <div v-if="breakpoint.smDown">
-        <div class="flex-item shirt-container--50">
-            <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
-        </div>
-        <div class="flex-item">
+    <NuxtLayout class="max-w-full" name="wrapper">
+        <template #left>
             <ColorSwitcher
                 :colors="colors"
                 @change="onUpdateColor"
-                row
+                :row="breakpoint.smDown"
             ></ColorSwitcher>
-        </div>
-        <div class="flex-item switchers">
-            <MotiveSwitcher
-                :motives="motives"
-                @change="onUpdateMotive"
-                row
-            ></MotiveSwitcher>
-        </div>
-    </div>
+        </template>
 
-    <div v-else class="flex-container">
-        <div class="flex-item">
-            <ColorSwitcher
-                :colors="colors"
-                @change="onUpdateColor"
-            ></ColorSwitcher>
-        </div>
-        <div class="flex-item shirt-container">
+        <template #center>
             <TShirtDesigner v-bind="shirtBinding"></TShirtDesigner>
-        </div>
-        <div class="flex-item">
+        </template>
+
+        <template #right>
             <MotiveSwitcher
                 :motives="motives"
                 @change="onUpdateMotive"
+                :row="breakpoint.smDown"
             ></MotiveSwitcher>
-        </div>
-    </div>
+        </template>
+    </NuxtLayout>
 </template>
 
 <script setup lang="ts">
