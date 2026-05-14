@@ -4,7 +4,7 @@
             <ColorSwitcher
                 v-model="color"
                 :colors="colors"
-                :row="breakpoint.smDown"
+                :row="smDown"
             ></ColorSwitcher>
         </template>
 
@@ -16,7 +16,7 @@
             <MotiveSwitcher
                 v-model="motive"
                 :motives="motives"
-                :row="breakpoint.smDown"
+                :row="smDown"
             ></MotiveSwitcher>
         </template>
     </NuxtLayout>
@@ -26,14 +26,6 @@
 const designStore = useDesignStore()
 const { colors, color, motive, motives } = storeToRefs(designStore)
 
-const onUpdateMotive = (newMotive: Motive) => {
-    motive.value = newMotive
-}
-
-const onUpdateColor = (newColor: Color) => {
-    color.value = newColor
-}
-
 const shirtBinding = computed(() => {
     return {
         color: color.value,
@@ -41,11 +33,10 @@ const shirtBinding = computed(() => {
     }
 })
 
-// TODO: fix do not refetch colors and motives on new product
 if (colors.value.length == 0) {
     designStore.getColors()
     designStore.getMotives()
 }
 
-const breakpoint = useBreakpoint()
+const smDown = useMediaQuery('(max-width: 640px)')
 </script>
