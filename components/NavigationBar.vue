@@ -3,7 +3,7 @@
         <div class="p-4">
             <span class="text-green-600 text-4xl">{{ titleItem.title }}</span>
         </div>
-        <div class="flex gap-10 m-4 items-center">
+        <div class="flex gap-10 m-4 items-center justify-center">
             <span class="text-4xl font-bold">
                 <ClientOnly>
                     <span v-if="titleItem.showTotal">
@@ -11,11 +11,10 @@
                     </span>
                 </ClientOnly>
             </span>
-            <NuxtLink
-                :href="titleItem.to ?? undefined"
-                class="p-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 cursor-pointer"
-            >
-                {{ titleItem.action }}
+            <NuxtLink :href="titleItem.to ?? undefined">
+                <BaseButton>
+                    {{ titleItem.action }}
+                </BaseButton>
             </NuxtLink>
         </div>
     </nav>

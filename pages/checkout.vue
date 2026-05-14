@@ -51,8 +51,8 @@
                 </VaForm>
             </div>
         </div>
-        <VaButton @click="buy()" color="success">
-            Buy ({{ totalPrice.toFixed(2) }} €)</VaButton
+        <BaseButton @click="buy()" color="success">
+            Buy ({{ totalPrice.toFixed(2) }} €)</BaseButton
         >
     </div>
 </template>
