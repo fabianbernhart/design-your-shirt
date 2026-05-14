@@ -38,5 +38,5 @@ if (colors.value.length == 0) {
     designStore.getMotives()
 }
 
-const smDown = useMediaQuery('(max-width: 640px)')
+const smDown = useMediaQuery('(max-width: 1023px)')
 </script>
