@@ -2,9 +2,12 @@
     <div class="order-success-page">
         <div class="content">
             <h1>Thank you {{ personalData.name }} for your order!</h1>
-            <VaButton @click="navigateToDesignPage">
-                Design Another Product</VaButton
-            >
+
+            <NuxtLink href="/designer">
+                <BaseButton @click="reset()">
+                    {{ 'Design Another Product' }}
+                </BaseButton>
+            </NuxtLink>
         </div>
     </div>
 </template>
@@ -12,15 +15,12 @@
 <script setup>
 const designStore = useDesignStore()
 
-const { personalData } = designStore
+const { personalData, color, colors, motive, motives } =
+    storeToRefs(designStore)
 
-// Function to navigate to the design page
-const navigateToDesignPage = () => {
-    designStore.$reset()
-
-    navigateTo('/designer').catch((error) => {
-        console.error('Navigation error:', error)
-    })
+const reset = () => {
+    color.value = colors.value[0] ?? null
+    motive.value = motives.value[0] ?? null
 }
 </script>
 
