@@ -29,31 +29,33 @@
                 <hr />
                 <p>Total: {{ totalPrice.toFixed(2) }} €</p>
             </div>
-            <div class="flex-item card">
+            <div class="flex-1 flex-item card">
                 <h2>Personal Data</h2>
-                <VaForm>
-                    <VaInput
-                        class="personal-data-input"
+                <form
+                    class="w-100 flex flex-col gap-1 items-center"
+                    ref="checkout"
+                    @submit.prevent="buy"
+                >
+                    <BaseInput
                         v-model="personalData.name"
                         :error="(errors.name ?? []).length > 0"
                         :error-messages="errors.name"
                         label="Name"
-                        :autofocus="true"
+                        autofocus
                     />
-                    <VaInput
-                        immediate-validation
-                        class="personal-data-input"
+                    <BaseInput
+                        label="Address"
                         :error="(errors.address ?? []).length > 0"
                         v-model="personalData.address"
                         :error-messages="errors.address"
-                        label="Address"
+                        immediate-validation
                     />
-                </VaForm>
+                    <BaseButton form="checkout" type="submit">
+                        Buy ({{ totalPrice.toFixed(2) }} €)
+                    </BaseButton>
+                </form>
             </div>
         </div>
-        <BaseButton @click="buy()" color="success">
-            Buy ({{ totalPrice.toFixed(2) }} €)</BaseButton
-        >
     </div>
 </template>
 
@@ -103,6 +105,7 @@ const createOrder = async (order: Order) => {
 }
 
 const buy = () => {
+    console.log('submit works')
     createOrder(designStore.personalData)
 }
 </script>
@@ -173,10 +176,6 @@ const buy = () => {
         font-size: small;
     }
 
-    .flex-item {
-        display: block;
-        min-width: 100%;
-    }
     .personal-data-input {
         width: 100%;
     }

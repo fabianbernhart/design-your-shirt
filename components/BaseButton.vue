@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 defineProps<{
+    form?: string
     variant?: 'primary' | 'secondary'
     disabled?: boolean
     loading?: boolean
