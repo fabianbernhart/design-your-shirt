@@ -7,12 +7,12 @@
             :value="modelValue"
             @input="onInput"
             :class="[
-                'border rounded px-3 py-2 w-full',
+                'w-full rounded border px-3 py-2',
                 error && 'border-red-500'
             ]"
         />
 
-        <p v-if="errorMessages?.length" class="text-red-500 text-sm">
+        <p v-if="errorMessages?.length" class="text-sm text-red-500">
             {{ errorMessages[0] }}
         </p>
     </div>

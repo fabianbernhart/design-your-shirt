@@ -4,7 +4,7 @@
         :disabled="disabled || loading"
         v-bind="$attrs"
         :class="[
-            'rounded-lg px-4 py-2 transition font-medium',
+            'rounded-lg px-4 py-2 font-medium transition',
             variant === 'secondary'
                 ? 'bg-gray-200 text-black'
                 : 'bg-black text-white',

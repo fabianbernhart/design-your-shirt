@@ -29,10 +29,10 @@
                 <hr />
                 <p>Total: {{ totalPrice.toFixed(2) }} €</p>
             </div>
-            <div class="flex-1 flex-item card">
+            <div class="flex-item card flex-1">
                 <h2>Personal Data</h2>
                 <form
-                    class="w-100 flex flex-col gap-1 items-center"
+                    class="w-100 flex flex-col items-center gap-1"
                     ref="checkout"
                     @submit.prevent="buy"
                 >

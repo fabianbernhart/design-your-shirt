@@ -13,7 +13,7 @@
         </div>
 
         <div
-            class="order-3 flex flex-[1] items-center justify-center lg:flex-[1]"
+            class="order-3 flex flex-[1] flex-row items-center justify-center lg:flex-[1] lg:flex-col"
         >
             <slot name="right"></slot>
         </div>

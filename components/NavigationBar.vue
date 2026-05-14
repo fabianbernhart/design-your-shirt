@@ -1,9 +1,9 @@
 <template>
-    <nav class="flex justify-between gap-2 items-center h-20 bg-slate-100">
+    <nav class="flex h-20 items-center justify-between gap-2 bg-slate-100">
         <div class="p-4">
-            <span class="text-green-600 text-4xl">{{ titleItem.title }}</span>
+            <span class="text-4xl text-green-600">{{ titleItem.title }}</span>
         </div>
-        <div class="flex gap-10 m-4 items-center justify-center">
+        <div class="m-4 flex items-center justify-center gap-10">
             <span class="text-4xl font-bold">
                 <ClientOnly>
                     <span v-if="titleItem.showTotal">
