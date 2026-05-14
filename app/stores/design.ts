@@ -28,7 +28,9 @@ export const useDesignStore = defineStore('designStore', () => {
     })
 
     const getColors = (): void => {
-        useFetch<Color[]>('/api/colors')
+        useFetch<Color[]>('/api/colors', {
+            deep: true
+        })
             .then(({ data, error }) => {
                 if (error.value) {
                     console.error("Error loading '/api/colors':", error.value)
@@ -52,7 +54,9 @@ export const useDesignStore = defineStore('designStore', () => {
     }
 
     const getMotives = (): void => {
-        useFetch<Motive[]>('/api/motives')
+        useFetch<Motive[]>('/api/motives', {
+            deep: true
+        })
             .then(({ data, error }) => {
                 if (error.value) {
                     console.error("Error loading '/api/motives':", error.value)

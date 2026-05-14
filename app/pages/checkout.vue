@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ValidationError } from '~/shared/types'
+import type { ValidationError } from '#shared/types'
 
 const designStore = useDesignStore()
 
