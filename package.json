@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@pinia/nuxt": "0.5.1",
-    "@vuestic/nuxt": "1.0.20",
     "vue": "3.5.34"
   }
 }
