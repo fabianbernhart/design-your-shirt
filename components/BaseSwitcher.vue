@@ -1,5 +1,5 @@
 <template>
-    <div :class="`base-switcher--${directionClass}`">
+    <div :class="`base base-switcher--${directionClass}`">
         <div class="arrow" v-if="canScrollPrev" @click="prevItems">
             <slot name="up-arrow">
                 <span v-if="props.row">&larr;</span>
@@ -7,7 +7,7 @@
             </slot>
         </div>
         <div
-            :class="`items-container--${directionClass}`"
+            :class="`items-container items-container--${directionClass}`"
             @wheel="handleScroll"
         >
             <template v-for="(item, index) in visibleItems" :key="index">
@@ -87,24 +87,20 @@ const directionClass = computed(() => {
 </script>
 
 <style scoped>
-.base-switcher--row {
+.base {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
     border-radius: 10px;
-    width: 100%;
-    max-height: 150px;
+    padding: 20px;
+    align-items: center;
+}
+
+.base-switcher--row {
+    flex-direction: row;
 }
 
 .base-switcher--column {
-    display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 150px;
 }
 
 .arrow {
@@ -115,21 +111,17 @@ const directionClass = computed(() => {
     transition: color 0.3s;
 }
 
-.arrow:hover {
-    color: darken(#2d5825, 10%);
+.items-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 }
 
 .items-container--column {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    overflow: hidden;
 }
 
 .items-container--row {
-    display: flex;
     flex-direction: row;
-    align-items: center;
-    overflow: hidden;
 }
 </style>
